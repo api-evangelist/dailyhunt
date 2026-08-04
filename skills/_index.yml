@@ -1,0 +1,21 @@
+generated: '2026-08-04'
+method: generated
+source: openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml, https://api-syndication.dailyhunt.in/
+note: >-
+  Dailyhunt publishes no AGENTS.md or provider-authored agent skills (searched the developer resource
+  center, the partner integration reference and the github.com/dailyhunt organization, 2026-08-04).
+  These are API Evangelist packaged skills, generated from the derived OpenAPI definitions and the
+  published documentation. Every operationId referenced exists verbatim in the referenced spec.
+skills:
+- file: dailyhunt-syndicate-a-channel-feed.md
+  name: Syndicate a Dailyhunt channel feed
+  api: openapi/dailyhunt-content-syndication-openapi.yml
+  operations: [listLanguages, listChannels, fetchItems, trackViewedItems]
+- file: dailyhunt-search-and-track-content.md
+  name: Search Dailyhunt content and capture user feedback
+  api: openapi/dailyhunt-content-syndication-openapi.yml
+  operations: [searchContent, listFeedbackOptions, submitFeedback, trackViewedItems]
+- file: dailyhunt-upload-a-product-catalog.md
+  name: Upload a product catalog to Dailyhunt
+  api: openapi/dailyhunt-shopping-catalog-openapi.yml
+  operations: [createCatalog, getCatalog, submitProductBatch, getProductBatchStatus]

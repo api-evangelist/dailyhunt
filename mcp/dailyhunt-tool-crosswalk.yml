@@ -1,0 +1,72 @@
+generated: '2026-08-04'
+method: derived
+source: mcp/dailyhunt-mcp.yml, openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml
+description: >-
+  Binds each candidate MCP tool to its backing OpenAPI operation, so every tool inherits a real input
+  contract from that operation's parameters and requestBody instead of a guessed one. Confidence is
+  high across the board because the tool list was derived one-to-one from the operations rather than
+  harvested from a live tools/list — there is no published MCP server to diverge from. Re-derive this
+  crosswalk if Dailyhunt ever ships one.
+surfaces:
+  openapi:
+  - {file: openapi/dailyhunt-content-syndication-openapi.yml, operations: 11, provider_published: false, note: 'derived by API Evangelist from the published partner reference'}
+  - {file: openapi/dailyhunt-shopping-catalog-openapi.yml, operations: 4, provider_published: false, note: 'derived by API Evangelist from the published catalog guide'}
+  graphql:
+    endpoint: null
+    note: No GraphQL surface published or discovered on any Dailyhunt host.
+  mcp:
+    url: null
+    published: false
+    gated: null
+    note: >-
+      No hosted MCP server exists, so tools/list could not be called. Tools below are candidates
+      derived from the OpenAPI, not observed.
+  rest_runtime:
+    reachable: false
+    note: >-
+      feed.dailyhunt.in has no public DNS A record and track.dailyhunt.in returns 503 to
+      unauthenticated requests, so no operation could be exercised live.
+crosswalk:
+- {tool: list_channels, category: discovery, rest: [listChannels], binding: rest, confidence: high}
+- {tool: list_location_channels, category: discovery, rest: [listLocationChannels], binding: rest, confidence: high}
+- {tool: list_video_channels, category: discovery, rest: [listVideoChannels], binding: rest, confidence: high}
+- {tool: fetch_items, category: content, rest: [fetchItems], binding: rest, confidence: high,
+   note: 'Callers should pass the channel contentUrl returned by list_channels rather than composing cid+fm themselves.'}
+- {tool: search_content, category: content, rest: [searchContent], binding: rest, confidence: high}
+- {tool: list_feedback_options, category: feedback, rest: [listFeedbackOptions], binding: rest, confidence: high}
+- {tool: submit_feedback, category: feedback, rest: [submitFeedback], binding: rest, confidence: high,
+   note: 'Write. No idempotency contract — repeat submission semantics are undefined.'}
+- {tool: stream_cricket_score, category: sports, rest: [streamCricketScore], binding: rest, confidence: high}
+- {tool: stream_cricket_commentary, category: sports, rest: [streamCricketCommentary], binding: rest, confidence: high}
+- {tool: list_languages, category: reference, rest: [listLanguages], binding: rest, confidence: high}
+- {tool: track_viewed_items, category: obligations, rest: [trackViewedItems], binding: rest, confidence: high,
+   note: 'Mandatory write-back after every list view; also requires firing the ComScore pixel URLs, which has no REST operation of its own.'}
+- {tool: create_catalog, category: commerce, rest: [createCatalog], binding: rest, confidence: high}
+- {tool: get_catalog, category: commerce, rest: [getCatalog], binding: rest, confidence: high}
+- {tool: submit_product_batch, category: commerce, rest: [submitProductBatch], binding: rest, confidence: high,
+   note: 'Asynchronous; returns a handle, not a result. Must be paired with get_product_batch_status.'}
+- {tool: get_product_batch_status, category: commerce, rest: [getProductBatchStatus], binding: rest, confidence: high}
+mcp_only: []
+rest_only: []
+unbound_obligations:
+- name: comscore_attribution_ping
+  reason: >-
+    Dailyhunt requires a ComScore pixel fire per list view, using URLs returned in
+    data.track.comscoreUrls. It is an outbound call to a third-party host, not a Dailyhunt API
+    operation, so it has no operationId and cannot be modelled as a tool bound to a REST op — but any
+    conforming MCP server must still perform it.
+- name: clickout_parameter_preservation
+  reason: >-
+    Opening a card's deepLinkUrl requires appending puid and the dhFeedV1 cookie and preserving
+    Dailyhunt's embedded tracking parameters. A client-side navigation obligation with no backing
+    operation.
+coverage:
+  tools_named: 15
+  tools_bound: 15
+  mcp_only: 0
+  rest_ops_total: 15
+  rest_ops_with_tool: 15
+  unbound_obligations: 2
+x-evidence:
+  derived_on: '2026-08-04'
+  live_tools_list: not available (no published MCP server)

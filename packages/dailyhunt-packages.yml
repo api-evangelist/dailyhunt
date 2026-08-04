@@ -1,0 +1,42 @@
+generated: '2026-08-04'
+method: searched
+source: npm, PyPI, RubyGems, Packagist, crates.io, github.com/dailyhunt, https://api-syndication.dailyhunt.in/
+description: >-
+  No first-party Dailyhunt client library exists in any public package registry. Dailyhunt ships
+  reference code, not packaged SDKs: the Partner Integration Reference embeds a copy-paste
+  JavaScript/XHR sample and a single-file Java APIClient sample, both of which implement the
+  HMAC-SHA1 request signature inline. Partners are expected to transcribe them, not install them. No
+  SDKs pointer is emitted for this provider.
+packages: []
+reference_implementations:
+- language: javascript
+  form: inline HTML page using CryptoJS (core, hmac, sha1, enc-base64) to sign and XHR to call
+  packaged: false
+  source: https://api-syndication.dailyhunt.in/
+- language: java
+  form: single-file APIClient using javax.crypto.Mac HmacSHA1, commons-codec Base64 and Apache HttpClient
+  packaged: false
+  source: https://api-syndication.dailyhunt.in/
+browser_assets:
+- name: dht.min.js
+  kind: hosted script (not a registry package)
+  url: https://assets-money.dailyhunt.in/dht.min.js
+  official: true
+  note: The JS Tracker SDK is delivered as a hosted script tag, not published to npm. See components/dailyhunt-components.yml.
+registry_searches:
+- {registry: npm, query: dailyhunt, first_party_results: 0, note: 'only an unrelated third-party test package'}
+- {registry: pypi, query: 'dailyhunt / dailyhunt-api', first_party_results: 0, http_status: 404}
+- {registry: rubygems, query: dailyhunt, first_party_results: 0}
+- {registry: packagist, query: dailyhunt, first_party_results: 0}
+- {registry: crates.io, query: dailyhunt, first_party_results: 0}
+- {registry: 'github.com/dailyhunt', query: org repos, first_party_results: 0,
+   note: '6 repos — airdb and feed (Go, first-party, last pushed 2018) plus 4 forks (grpc-go, a2, Prebid.js, prebid.github.io). None is a client library for the syndication or catalog API.'}
+third_party:
+- name: vendz/dailyhunt-api
+  url: https://github.com/vendz/dailyhunt-api
+  official: false
+  note: An unofficial Python scraper of Dailyhunt news. Not a client for the partner API; recorded for completeness only.
+x-evidence:
+  fetched: '2026-08-04'
+  npm_search: https://registry.npmjs.org/-/v1/search?text=dailyhunt
+  github_org: https://github.com/dailyhunt

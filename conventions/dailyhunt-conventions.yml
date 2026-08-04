@@ -1,0 +1,146 @@
+generated: '2026-08-04'
+method: searched
+source: https://api-syndication.dailyhunt.in/
+docs: https://api-syndication.dailyhunt.in/
+description: >-
+  Cross-cutting request and response semantics for the Dailyhunt Content Syndication API and the
+  E-Commerce Shopping Catalog API, transcribed from Dailyhunt's published Partner Integration
+  Reference (v2.3) and E-Commerce Catalog Integration Guide.
+authentication:
+  style: signed-api-key
+  summary: >-
+    API key in the Authorization header as `key=<API Key>`, plus a Base64 HMAC-SHA1 `Signature`
+    header over the sorted, URL-encoded query string and uppercased HTTP method. Shopping Catalog
+    uses a body-borne vendor access_token instead.
+  artifact: authentication/dailyhunt-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Dailyhunt publishes no idempotency key, no request de-duplication contract and no retry-safety
+    guidance for its write surfaces (feedback submission, view tracking, product batch submission).
+    The Shopping Catalog batch endpoint has an `allow_upsert` flag, which changes CREATE semantics
+    but is not an idempotency contract. No Idempotency pointer is emitted for this provider.
+pagination:
+  style: page-number-with-opaque-next-url
+  request_params:
+  - pageNumber
+  - pageSize
+  response_fields:
+  - pageNumber
+  - count
+  - nextPageUrl
+  guidance: >-
+    Follow the `nextPageUrl` returned in the response rather than incrementing `pageNumber` yourself.
+    The next-page URL carries server-generated continuation state (`pageScrollStart`, `psi`,
+    `dsOffset`) that must be resent verbatim; the only value the caller must refresh is the `ts`
+    timestamp, which then has to be re-signed.
+  zero_based: true
+response_envelope:
+  shape: '{ "code": <http status>, "data": { "rows": [...], "count": n, "pageNumber": n, "nextPageUrl": "..." } }'
+  note: >-
+    Every Content Syndication response repeats the HTTP status in a top-level `code` field and wraps
+    the payload in `data`. Collection payloads always appear under `data.rows`.
+error_envelope:
+  shape: none
+  format: http-status-only
+  note: >-
+    Dailyhunt returns bare HTTP status codes for failures (401 invalid API key, 403 invalid
+    signature, 500 unexpected error; 400 and 204 on tracking; 204 on cricket streams with no match).
+    There is no RFC 9457 problem+json body, no machine-readable error code, and no documented error
+    message field. See errors/dailyhunt-error-codes.yml.
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/syndication
+  document_version: '2.3'
+  note: >-
+    The API is versioned in the URI path (`/api/v2/`). The integration reference itself carries a
+    separate document version (2.1, 2.2, 2.3) with a dated change log; additive field changes ship
+    without a path-version bump. The Shopping Catalog API is independently versioned at
+    `/shopping-catalog/v1/`.
+rate_limits:
+  published: false
+  note: >-
+    No rate limits, quotas or rate-limit response headers are published. Dailyhunt instead asks
+    partners to "share estimated volume and rollout plan" during onboarding, so capacity is
+    negotiated per partner rather than signalled at runtime.
+request_tracing:
+  request_id_header: none
+  note: No correlation or request-id header is documented.
+timestamps:
+  parameter: ts
+  required: true
+  format: milliseconds since epoch
+  note: >-
+    A `ts` query parameter must be present on every call and must be part of the signed parameter
+    set, which makes signatures time-bound and non-replayable across the signing window.
+feature_flags:
+  parameter: pfm
+  alias: fm
+  style: bitmask
+  bits:
+    LIVE_TV_CARD: 1
+    CRICKET_CARD_BRIEF: 8
+    HERO_CARD: 16
+    VIDEO_CHANNELS: 32
+    VIRAL_CHANNELS: 64
+    CRICKET_CARD_DETAILED: 128
+  reserved: [2, 4]
+  note: >-
+    `pfm` (partner feature mask) is the sum of the enabled feature bits and gates which card types a
+    partner may receive. It should be set at the Channels API level; each channel's `contentUrl`
+    already carries the correct channel-level `fm`. Requesting a bit the partner is not entitled to
+    yields no content rather than an error.
+content_negotiation:
+  media_type: application/json
+  cors:
+    supported: true
+    preflight: OPTIONS
+    headers:
+    - Access-Control-Allow-Origin
+    - 'Access-Control-Allow-Credentials: true'
+    note: Browser integrations are explicitly supported; credentials must be sent with the request.
+media_transformation:
+  images:
+    url_template: 'http://bcdn.newshunt.com/{CMD}/{W}x{H}_{Q}/(image_folder).{EXT}'
+    parameters:
+      CMD: crop (exact size, centre-cropped) or resize (closest available size)
+      W: desired width for the user's device
+      H: desired height for the user's device
+      Q: desired quality percentage, maximum 100
+      EXT: desired extension, for example webp or jpg
+    note: >-
+      Image URLs are returned as templates the caller fills in per device and network quality;
+      Dailyhunt generates and CDN-caches each variant on demand.
+obligations:
+  description: >-
+    Unusually for a read API, Dailyhunt places mandatory write-back obligations on the consumer.
+    These are integration requirements, not optional telemetry.
+  items:
+  - name: View tracking
+    requirement: >-
+      For every list view rendered (first page of a channel, each next page, and on list load) the
+      partner must POST the array of per-card `trackData` values to the `trackUrl` returned in the
+      same Content Fetch response, appending `partner`, `puid` and `ts`.
+    operation: trackViewedItems
+  - name: ComScore attribution
+    requirement: >-
+      For every list view the partner must also fire the ComScore pixel URLs returned in the
+      response's `track.comscoreUrls`, either as an image tag in the browser or as a direct call for
+      native integrations, and must persist and replay the cookie ComScore sets.
+  - name: Clickout parameter preservation
+    requirement: >-
+      When opening a card's `deepLinkUrl` the partner must append its `puid` and the `dhFeedV1`
+      cookie, and must preserve the tracking parameters Dailyhunt embedded in the link (`s`, `ss`,
+      `utm_medium`, `partnerRef` and similar) verbatim.
+cross_links:
+  authentication: authentication/dailyhunt-authentication.yml
+  errors: errors/dailyhunt-error-codes.yml
+  lifecycle: lifecycle/dailyhunt-lifecycle.yml
+  data_model: data-model/dailyhunt-data-model.yml
+  sandbox: sandbox/dailyhunt-sandbox.yml
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://api-syndication.dailyhunt.in/', http_status: 200}
+  - {url: 'https://developer.dailyhunt.in/ads/docs/shopping-catalog/', http_status: 200}

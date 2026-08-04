@@ -1,0 +1,76 @@
+generated: '2026-08-04'
+method: derived
+status: candidate
+source: openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml
+description: >-
+  Dailyhunt publishes no hosted or remote MCP server. Searched the developer resource center, the
+  partner integration reference, the github.com/dailyhunt organization and the public MCP registries;
+  nothing found. This is a CANDIDATE tool surface derived from the operations in the OpenAPI
+  definitions, offered as a design starting point — it is not a Dailyhunt product and nothing here is
+  callable today.
+server:
+  name: dailyhunt
+  transport: http
+  url: null
+  published: false
+search_evidence:
+- {source: 'https://developer.dailyhunt.in/ads/', result: no MCP surface, http_status: 200}
+- {source: 'https://api-syndication.dailyhunt.in/', result: no MCP surface, http_status: 200}
+- {source: 'https://github.com/dailyhunt', result: 'no MCP repo (6 repos, last first-party push 2018)'}
+- {source: 'npm @modelcontextprotocol scope', result: no dailyhunt server}
+constraints:
+  note: >-
+    Any real MCP server over this API would have to hold the partner secret key server-side and sign
+    every outbound request (HMAC-SHA1 over the sorted query string), maintain the per-user dhFeedV1
+    cookie, and honour Dailyhunt's mandatory view-tracking and ComScore attribution obligations on
+    the agent's behalf. A naive proxy that skips the tracking write-back would breach the partner
+    integration contract.
+tools:
+- name: list_channels
+  description: List the Dailyhunt content channels available to the partner for a language.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#listChannels
+- name: list_location_channels
+  description: List location-scoped content channels.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#listLocationChannels
+- name: list_video_channels
+  description: List video-only content channels.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#listVideoChannels
+- name: fetch_items
+  description: Fetch a page of content cards from a channel.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#fetchItems
+- name: search_content
+  description: Search the Dailyhunt catalogue by keyword.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#searchContent
+- name: list_feedback_options
+  description: List the feedback reasons a user can select against a card.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#listFeedbackOptions
+- name: submit_feedback
+  description: Submit a user's feedback selection for a card.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#submitFeedback
+- name: stream_cricket_score
+  description: Get the live score detail for a cricket match.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#streamCricketScore
+- name: stream_cricket_commentary
+  description: Get paginated ball-by-ball commentary for a cricket match.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#streamCricketCommentary
+- name: list_languages
+  description: List the languages Dailyhunt content feeds support.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#listLanguages
+- name: track_viewed_items
+  description: Report which cards the user actually saw. Mandatory after every list view.
+  source_operation: openapi/dailyhunt-content-syndication-openapi.yml#trackViewedItems
+- name: create_catalog
+  description: Create a product catalog for a registered commerce vendor.
+  source_operation: openapi/dailyhunt-shopping-catalog-openapi.yml#createCatalog
+- name: get_catalog
+  description: Fetch a product catalog's details.
+  source_operation: openapi/dailyhunt-shopping-catalog-openapi.yml#getCatalog
+- name: submit_product_batch
+  description: Submit a batch of product create, update or delete rows to a catalog.
+  source_operation: openapi/dailyhunt-shopping-catalog-openapi.yml#submitProductBatch
+- name: get_product_batch_status
+  description: Poll the processing status and errors of a submitted product batch.
+  source_operation: openapi/dailyhunt-shopping-catalog-openapi.yml#getProductBatchStatus
+x-evidence:
+  searched: '2026-08-04'
+  result: no provider-published MCP server

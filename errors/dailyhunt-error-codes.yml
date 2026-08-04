@@ -1,0 +1,90 @@
+generated: '2026-08-04'
+method: searched
+source: https://api-syndication.dailyhunt.in/
+docs: https://api-syndication.dailyhunt.in/
+format: http-status-only
+envelope:
+  problem_json: false
+  note: >-
+    Dailyhunt does not publish an error body. Failures are signalled with the bare HTTP status code;
+    there is no RFC 9457 application/problem+json representation, no stable machine-readable error
+    code, and no documented error message or remediation field. Successful responses echo the status
+    in a top-level `code` field, but error responses are not documented as carrying that envelope.
+errors:
+- status: 401
+  title: Invalid API key
+  meaning: The API key supplied in the Authorization header is not valid.
+  remediation: >-
+    Confirm the Authorization header is sent as `key=<API Key>` with the key Dailyhunt provisioned
+    for the environment being called — stage and production keys differ.
+  api: Content Syndication
+  source: https://api-syndication.dailyhunt.in/
+- status: 403
+  title: Invalid signature
+  meaning: The Signature header did not match the signature Dailyhunt computed for the request.
+  remediation: >-
+    Rebuild the signature base string: append `ts`, URL-encode every key and value, sort
+    lexicographically on the encoded key, join `key=value` pairs, append the uppercased HTTP method,
+    HMAC-SHA1 with the secret key, Base64-encode. A stale `ts` or a parameter added after signing is
+    the usual cause.
+  api: Content Syndication
+  source: https://api-syndication.dailyhunt.in/
+- status: 500
+  title: Internal server error
+  meaning: An unexpected issue occurred at Dailyhunt.
+  remediation: Retry with backoff; escalate to the Dailyhunt integration contact if it persists.
+  api: Content Syndication
+  source: https://api-syndication.dailyhunt.in/
+- status: 400
+  title: Bad request
+  meaning: A malformed tracking request was detected.
+  remediation: >-
+    Verify the tracking payload carries `viewedDate` and a `stories` array of `{id, trackData}` pairs
+    with the trackData copied verbatim from the Content Fetch response.
+  api: Content Syndication
+  operation: trackViewedItems
+  source: https://api-syndication.dailyhunt.in/
+- status: 204
+  title: No content
+  meaning: >-
+    On the tracking endpoint, 204 is the SUCCESS response for accepted view tracking. On the cricket
+    score and commentary streams, 204 means no match was found or no further commentary is
+    available.
+  remediation: >-
+    Treat 204 as success on trackViewedItems; treat it as an end-of-stream or unknown-match signal on
+    streamCricketScore and streamCricketCommentary.
+  api: Content Syndication
+  operations: [trackViewedItems, streamCricketScore, streamCricketCommentary]
+  source: https://api-syndication.dailyhunt.in/
+- status: 401
+  title: Invalid cookie
+  meaning: >-
+    Dailyhunt states it will reject a request whose dhFeedV1 cookie is found invalid. The published
+    reference does not name the status code returned in that case.
+  remediation: >-
+    Drop the stored dhFeedV1 cookie for the user and re-issue the call without it; Dailyhunt
+    regenerates the cookie when it is missing.
+  api: Content Syndication
+  confidence: low
+  note: Status code inferred from context, not published — do not rely on it.
+  source: https://api-syndication.dailyhunt.in/
+batch_errors:
+  api: E-Commerce Shopping Catalog
+  mechanism: >-
+    Product batch submission is asynchronous and does not report row-level failures on the submission
+    response. The submitter receives a handle and must poll
+    /shopping-catalog/v1/catalog/{catalog_id}/batch/status, which returns a per-batch `status`, an
+    `errors_total_count` and an `errors` array.
+  operation: getProductBatchStatus
+  source: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+gaps:
+- No error code registry, error taxonomy, or error reference page is published for either API.
+- No error response body schema is documented, so a client cannot programmatically distinguish
+  failure causes beyond the HTTP status.
+- The Shopping Catalog guide documents only success responses (200, 201); no failure statuses are
+  published for catalog creation, retrieval or batch submission.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://api-syndication.dailyhunt.in/', http_status: 200}
+  - {url: 'https://developer.dailyhunt.in/ads/docs/shopping-catalog/', http_status: 200}

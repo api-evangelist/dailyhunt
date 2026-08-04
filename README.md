@@ -42,5 +42,16 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Dailyhunt is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/dailyhunt_stock/
+Dailyhunt is India's largest local-language content and news aggregation platform, operated by VerSe Innovation (Bengaluru). It aggregates news, video and short-form "DailyShare" cards from more than 600 publisher partners across fourteen Indian languages, and syndicates that catalogue to approved partners through a signed HTTP API. Alongside syndication it runs an advertising stack: the Dailyhunt Direct self-serve ad platform, a JavaScript Tracker SDK for down-funnel conversion tracking, and an E-Commerce Shopping Catalog API for vendor product feeds.
+
+Two public API surfaces are profiled here:
+
+- **Content Syndication API** — `feed.dailyhunt.in/api/v2/syndication` — channel discovery, content fetch, search, languages, feedback, live cricket, and a mandatory view-tracking callback. Documented at https://api-syndication.dailyhunt.in/.
+- **E-Commerce Shopping Catalog API** — `money.dailyhunt.in/shopping-catalog/v1` — vendor catalog creation and asynchronous product batch ingestion. Documented at https://developer.dailyhunt.in/ads/docs/shopping-catalog/.
+
+Access to both is partner-gated: keys are provisioned over email at onboarding, and the production feed host does not resolve in public DNS. Dailyhunt publishes no OpenAPI — the specifications in `openapi/` were **derived by API Evangelist from Dailyhunt's own published documentation** and are labelled `x-apievangelist-provider-published: false`. Dailyhunt's own Postman collection is harvested verbatim in `postman/`.
+
+- https://www.dailyhunt.in/
+- https://developer.dailyhunt.in/ads/
+- https://api-syndication.dailyhunt.in/
+- https://github.com/dailyhunt

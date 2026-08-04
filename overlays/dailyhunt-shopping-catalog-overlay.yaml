@@ -1,0 +1,54 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Dailyhunt E-Commerce Shopping Catalog API
+  version: 1.0.0
+extends: openapi/dailyhunt-shopping-catalog-openapi.yml
+x-generated: '2026-08-04'
+x-method: generated
+x-source: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provenance:
+      derived_from: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+      provider_published: false
+      derived_on: '2026-08-04'
+- target: $.info
+  update:
+    x-access-model:
+      self_service: false
+      provisioning: vendor registration with Dailyhunt; a vendor access_token is issued
+      sandbox: none published
+- target: $.info
+  update:
+    x-conventions: conventions/dailyhunt-conventions.yml
+    x-errors: errors/dailyhunt-error-codes.yml
+    x-authentication: authentication/dailyhunt-authentication.yml
+    x-data-model: data-model/dailyhunt-data-model.yml
+- target: $.info
+  update:
+    x-gaps:
+      openapi_published: false
+      failure_statuses_documented: false
+      idempotency: false
+      batch_size_limit_published: false
+      rate_limits_published: false
+      completion_webhook: false
+      status_enum_published: false
+      error_row_schema_published: false
+- target: $.paths['/shopping-catalog/v1/catalog/{catalog_id}/batch'].post
+  update:
+    x-async: true
+    x-result-retrieval: >-
+      The 201 response is a receipt carrying a handle, not a result. Row-level validation outcomes are
+      only available from getProductBatchStatus.
+    x-idempotency-key: null
+    x-match-key: retailer_id
+- target: $.paths['/shopping-catalog/v1/catalog/{catalog_id}/batch/status'].get
+  update:
+    x-polling:
+      required: true
+      terminal_status_observed: Finished
+      check_field: errors_total_count
+    x-nonstandard: >-
+      A GET with a required JSON request body carrying the credential — as published by Dailyhunt.

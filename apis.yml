@@ -1,18 +1,106 @@
 aid: dailyhunt
 name: Dailyhunt
-description: 'Dailyhunt is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Dailyhunt is India''s largest local-language content and news aggregation platform,
+  operated by VerSe Innovation (Bengaluru). It aggregates news, video, and short-form "DailyShare"
+  cards from more than 600 publisher partners across fourteen Indian languages and distributes them
+  through its own apps, mobile web and PWA, and — for approved partners — through a signed Content
+  Syndication API that pushes the same catalogue into partner apps, OEM device home screens and
+  browsers. Alongside syndication, Dailyhunt runs an advertising stack: the Dailyhunt Direct
+  self-serve ad platform, a JavaScript Tracker SDK (with a Google Tag Manager path) for down-funnel
+  conversion tracking on advertiser sites, and an E-Commerce Shopping Catalog API for vendors to
+  batch-upload product feeds. VerSe Innovation also operates the Josh short-video app. API access is
+  partner-gated: keys, secrets and partner codes are provisioned during onboarding rather than
+  self-service, and the production feed host is not publicly resolvable.'
 url: https://raw.githubusercontent.com/api-evangelist/dailyhunt/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
+image: https://m.dailyhunt.in/favicon.ico
 tags:
 - Company
-apis: []
+- News
+- Media
+- Content Syndication
+- Content
+- Advertising
+- Video
+- Localization
+- India
+- Mobile
+apis:
+- aid: dailyhunt:content-syndication
+  name: Dailyhunt Content Syndication API
+  description: 'The partner-facing API that syndicates Dailyhunt''s editorial catalogue into a
+    partner''s own app, browser, device home screen or PWA. It covers channel discovery (news,
+    location, video and DailyShare/viral channels), paginated content fetch for a channel''s cards,
+    keyword search, the supported-language list, card feedback capture, live cricket score and
+    commentary streaming, and a view-tracking callback. Every request is signed with a Base64
+    HMAC-SHA1 signature over the sorted query string plus the HTTP method, using a secret key issued
+    at onboarding, and carries a per-user partner id (puid). Advanced surfaces are gated behind a
+    per-partner feature mask.'
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - News
+  - Content Syndication
+  - Search
+  - Video
+  - Sports
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-content-syndication-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Overlay
+    url: overlays/dailyhunt-content-syndication-overlay.yaml
+  - type: AgentSkill
+    url: skills/dailyhunt-syndicate-a-channel-feed.md
+  - type: AgentSkill
+    url: skills/dailyhunt-search-and-track-content.md
+  x-evidence:
+    fetched: '2026-08-04'
+    documentation_url: https://api-syndication.dailyhunt.in/
+    documentation_http_status: 200
+    collection_url: https://api-syndication.dailyhunt.in/api/collections/9554411/SW7gSj34
+    collection_http_status: 200
+    base_host_dns: 'feed.dailyhunt.in has no public A record (partner-gated); probed 2026-08-04'
+- aid: dailyhunt:shopping-catalog
+  name: Dailyhunt E-Commerce Shopping Catalog API
+  description: 'Lets a registered commerce vendor create a product catalog inside the Dailyhunt
+    system and batch-submit CREATE/UPDATE/DELETE product rows against it, each carrying the standard
+    product-feed attributes (price, sale window, availability, condition, category, size, colour,
+    GTIN, inventory, images, shipping rows and Android/iPhone app links). Batches are asynchronous:
+    the API returns a handle the vendor polls for completion and per-row errors. Authenticated with a
+    vendor access token issued at registration.'
+  humanURL: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+  baseURL: https://money.dailyhunt.in/shopping-catalog/v1
+  tags:
+  - E-Commerce
+  - Product Catalog
+  - Advertising
+  - Data Ingestion
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-shopping-catalog-openapi.yml
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+  - type: Overlay
+    url: overlays/dailyhunt-shopping-catalog-overlay.yaml
+  - type: AgentSkill
+    url: skills/dailyhunt-upload-a-product-catalog.md
+  x-evidence:
+    fetched: '2026-08-04'
+    documentation_url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+    documentation_http_status: 200
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +108,67 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/dailyhunt_stock/
+  url: https://www.dailyhunt.in/
+- type: DeveloperPortal
+  url: https://developer.dailyhunt.in/ads/
+- type: Documentation
+  url: https://developer.dailyhunt.in/ads/
+- type: APIReference
+  url: https://api-syndication.dailyhunt.in/
+- type: GettingStarted
+  url: https://api-syndication.dailyhunt.in/
+- type: Blog
+  url: http://developer.dailyhunt.in/ads/blog/
+- type: GitHubOrganization
+  url: https://github.com/dailyhunt
+- type: Support
+  url: https://verse.in/contact-us.php
+- type: SignUp
+  url: https://direct.dailyhunt.in/login
+- type: TermsOfService
+  url: https://direct.dailyhunt.in/help/v2/ad-terms-and-conditions
+- type: PrivacyPolicy
+  url: https://m.dailyhunt.in/privacy
+- type: Postman
+  url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+- type: Authentication
+  url: authentication/dailyhunt-authentication.yml
+- type: Conventions
+  url: conventions/dailyhunt-conventions.yml
+- type: ErrorCatalog
+  url: errors/dailyhunt-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/dailyhunt-lifecycle.yml
+- type: ChangeLog
+  url: changelog/dailyhunt-changelog.yml
+- type: Conformance
+  url: conformance/dailyhunt-conformance.yml
+- type: Sandbox
+  url: sandbox/dailyhunt-sandbox.yml
+- type: DataModel
+  url: data-model/dailyhunt-data-model.yml
+- type: Components
+  url: components/dailyhunt-components.yml
+- type: Packages
+  url: packages/dailyhunt-packages.yml
+- type: WellKnown
+  url: well-known/dailyhunt-well-known.yml
+- type: Protobuf
+  url: grpc/dailyhunt-unified-metrics.proto
+- type: MCPServer
+  url: mcp/dailyhunt-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/dailyhunt-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/dailyhunt-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/dailyhunt-agentic-access.yml
+- type: DomainSecurity
+  url: security/dailyhunt-domain-security.yml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1

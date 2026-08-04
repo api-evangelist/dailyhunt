@@ -1,0 +1,61 @@
+generated: '2026-08-04'
+method: searched
+source: https://api-syndication.dailyhunt.in/
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/syndication
+  document_version: '2.3'
+  docs: https://api-syndication.dailyhunt.in/
+  note: >-
+    The Content Syndication API is versioned in the URI path. The E-Commerce Shopping Catalog API is
+    independently versioned at /shopping-catalog/v1/. Additive field changes ship inside the current
+    path version and are recorded only in the document change log.
+changelog:
+  artifact: changelog/dailyhunt-changelog.yml
+  last_published_change: '2021-08-24'
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no sunset timeline, and no RFC 8594 Sunset/Deprecation header support is
+    published. No operation in either published API surface is marked deprecated.
+deprecated_operations: []
+sla:
+  url: null
+  published: false
+  uptime_target: null
+  note: >-
+    No SLA, uptime commitment or support-response target is published for either API. Volume is
+    negotiated per partner at onboarding ("share estimated volume and rollout plan with Dailyhunt")
+    rather than committed to publicly.
+status_page:
+  url: null
+  found: false
+  probes:
+  - {url: 'https://status.dailyhunt.in/', result: 'DNS NXDOMAIN', probed: '2026-08-04'}
+  - {url: 'https://status.verse.in/', result: 'DNS NXDOMAIN', probed: '2026-08-04'}
+  note: No status page exists on any Dailyhunt or VerSe host. No StatusPage pointer is emitted.
+support:
+  channel: email
+  contacts:
+  - {role: Ads and catalog tech, email: ads-tech-team@verse.in, source: 'https://developer.dailyhunt.in/ads/docs/shopping-catalog/'}
+  contact_page: https://verse.in/contact-us.php
+  note: >-
+    Support is over email to named onboarding contacts published in the partner reference; there is
+    no ticketing system, developer forum or community channel. Individual named contacts published in
+    the reference are deliberately not recorded here.
+access:
+  model: partner-gated
+  self_service: false
+  note: >-
+    Credentials are provisioned over email during onboarding. The production host feed.dailyhunt.in
+    has no public DNS A record (probed 2026-08-04), so the API is not reachable — let alone
+    callable — without a partner arrangement.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://api-syndication.dailyhunt.in/', http_status: 200}
+  - {url: 'https://developer.dailyhunt.in/ads/docs/shopping-catalog/', http_status: 200}

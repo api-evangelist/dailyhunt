@@ -1,0 +1,92 @@
+generated: '2026-08-04'
+method: probed
+source: live HTTP probes of every Dailyhunt/VerSe host in apis.yml and the derived OpenAPI servers[]
+description: >-
+  Dailyhunt serves no /.well-known/ discovery document on any host. No security.txt, no OpenID or
+  OAuth discovery, no api-catalog, no ai-plugin, no A2A agent card, and no llms.txt. Recorded as
+  measured absence — this is valid data, not a missing probe.
+documents: []
+hosts_probed:
+- host: api-syndication.dailyhunt.in
+  role: API reference (Postman-hosted custom domain)
+  result: all paths 404
+  paths:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /openapi.json, status: 404}
+  - {path: /swagger.json, status: 404}
+  - {path: /api-docs, status: 404}
+- host: developer.dailyhunt.in
+  role: Developer resource center (Akamai/nginx)
+  result: all paths 404
+  paths:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /openapi.json, status: 404}
+  - {path: /swagger.json, status: 404}
+- host: m.dailyhunt.in
+  role: Consumer mobile web / PWA
+  result: all paths 404
+  paths:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: www.dailyhunt.in
+  role: Consumer website
+  result: SPA catch-all — returns HTTP 200 with an HTML shell for EVERY path probed
+  false_positive: true
+  note: >-
+    www.dailyhunt.in answers 200 with the same HTML document for /openapi.json,
+    /.well-known/agent-card.json, /llms.txt and every other path. None of these is a real document;
+    all were rejected as single-page-app catch-all responses. This host must not be treated as
+    serving any well-known resource.
+  paths:
+  - {path: /.well-known/security.txt, status: 200, body: 'HTML shell — rejected'}
+  - {path: /.well-known/agent-card.json, status: 200, body: 'HTML shell — rejected'}
+  - {path: /.well-known/agent.json, status: 200, body: 'HTML shell — rejected'}
+  - {path: /llms.txt, status: 200, body: 'HTML shell — rejected'}
+  - {path: /openapi.json, status: 200, body: 'HTML shell — rejected'}
+- host: track.dailyhunt.in
+  role: Production tracking host (from OpenAPI servers[])
+  result: all paths 503
+  note: Returns HTTP 503 "unconditional drop overload" to unauthenticated public requests.
+- host: feed.dailyhunt.in
+  role: Production content feed host (from OpenAPI servers[])
+  result: not resolvable
+  note: No public DNS A record as of 2026-08-04; the production API host cannot be probed from the open internet.
+- host: verse.in
+  role: VerSe Innovation corporate site
+  result: all paths 404
+  paths:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: myjosh.in
+  role: Josh short-video app site
+  result: no well-known documents
+security_txt:
+  found: false
+  note: No RFC 9116 security.txt on any host. No SecurityTxt pointer is emitted.
+agent_card:
+  found: false
+  note: >-
+    Probed /.well-known/agent-card.json and the legacy /.well-known/agent.json on every host. The
+    only 200s came from the www.dailyhunt.in SPA catch-all and were HTML, not AgentCard JSON. No
+    a2a/ artifact is written and no AgentCard pointer is emitted.
+x-evidence:
+  fetched: '2026-08-04'
+  method: 'curl -sSL, following redirects, body inspected for HTML shells'

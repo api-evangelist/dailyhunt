@@ -1,0 +1,74 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Dailyhunt Content Syndication API
+  version: 1.0.0
+extends: openapi/dailyhunt-content-syndication-openapi.yml
+x-generated: '2026-08-04'
+x-method: generated
+x-source: https://api-syndication.dailyhunt.in/
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provenance:
+      derived_from: https://api-syndication.dailyhunt.in/
+      derived_from_artifact: postman/dailyhunt-content-syndication.postman_collection.json
+      provider_published: false
+      derived_on: '2026-08-04'
+- target: $.info
+  update:
+    x-access-model:
+      self_service: false
+      provisioning: email onboarding (API Key, Secret Key, Partner Code)
+      production_host_public_dns: false
+      probed: '2026-08-04'
+- target: $.info
+  update:
+    x-conventions: conventions/dailyhunt-conventions.yml
+    x-errors: errors/dailyhunt-error-codes.yml
+    x-lifecycle: lifecycle/dailyhunt-lifecycle.yml
+    x-authentication: authentication/dailyhunt-authentication.yml
+    x-data-model: data-model/dailyhunt-data-model.yml
+- target: $.info
+  update:
+    x-consumer-obligations:
+    - id: view-tracking
+      requirement: POST per-card trackData to the response trackUrl on every list view
+      operation: trackViewedItems
+    - id: comscore-attribution
+      requirement: Fire every URL in data.track.comscoreUrls once per list view
+    - id: clickout-parameter-preservation
+      requirement: Append puid and the dhFeedV1 cookie to deepLinkUrl and preserve Dailyhunt's tracking parameters
+- target: $.info
+  update:
+    x-gaps:
+      openapi_published: false
+      idempotency: false
+      rate_limits_published: false
+      error_body: false
+      webhooks: false
+      asyncapi: false
+      mcp_server: false
+      agent_card: false
+      well_known_documents: false
+      status_page: false
+      sla: false
+      deprecation_policy: false
+      sdks: false
+      last_published_change: '2021-08-24'
+- target: $.paths['/api/v2/syndication/items'].get
+  update:
+    x-pagination:
+      style: opaque-next-url
+      follow: data.nextPageUrl
+      resend_verbatim: [pageScrollStart, psi, dsOffset]
+      refresh_and_resign: [ts]
+- target: $.paths['/api/v2/syndication/tracking'].post
+  update:
+    x-success-status: 204
+    x-idempotent: false
+    x-retry-safety: >-
+      Undefined. No idempotency key is published; treat an ambiguous timeout as unresolved rather
+      than blind-retrying.
+- target: $.paths['/api/v2/syndication/feedback'].post
+  update:
+    x-idempotent: false

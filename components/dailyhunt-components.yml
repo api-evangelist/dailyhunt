@@ -1,0 +1,69 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.dailyhunt.in/ads/
+docs: https://developer.dailyhunt.in/ads/
+description: >-
+  Client-side, embeddable surfaces Dailyhunt publishes for advertiser and partner websites. These are
+  browser-loaded scripts and pixels, distinct from the server-side syndication API — Dailyhunt ships
+  no server-side SDK packages (see packages/dailyhunt-packages.yml).
+families:
+- name: JS Tracker SDK
+  kind: javascript-tag
+  description: >-
+    A small asynchronous JavaScript snippet an advertiser drops into the <head> of every page it
+    wants tracked. It tracks page views by default and exposes a global dht() function for
+    additional down-funnel events. It requires the dhPayload query parameter that Dailyhunt appends
+    to the landing page when a user clicks a Dailyhunt ad banner — advertisers with a landing-page
+    parameter allowlist must whitelist dhPayload or the tracker will not work.
+  loader: https://assets-money.dailyhunt.in/dht.min.js
+  global: dht
+  init: "dht('init', '<id>')"
+  api:
+    - signature: "dht('<eventName>', <eventData>)"
+      parameters:
+      - {name: eventName, type: string, required: true, description: 'Name the event is identified with, for example PageView or AddToCart'}
+      - {name: eventValue, type: object, required: false, description: 'JSON data associated with the event, for example {userId, gender}'}
+  documented_events:
+  - {name: PageView, example_fields: [url]}
+  - {name: Login, example_fields: [userId, loginMode]}
+  - {name: AddToCart, example_fields: [productId, productCategory]}
+  note: Event names are advertiser-chosen; the three above are the documented examples, not a fixed enum.
+  docs: https://developer.dailyhunt.in/ads/docs/js-tracker-sdk/
+- name: JS Tracker SDK via Google Tag Manager
+  kind: tag-manager-integration
+  description: >-
+    The same tracker deployed through an existing GTM container rather than directly on the page.
+    Documented as a step-by-step build of one Custom HTML load tag (dhTrackerLoadTag, fired on All
+    Pages - Page View) plus one Custom HTML event tag per tracked event, driven by Custom Event
+    triggers off dataLayer.push() and Data Layer Variables.
+  requires: An active Dailyhunt down-funnel/conversion tracking partnership and a deployed GTM container.
+  documented_variables: [eventName, userId, productId, productName, productQuantity, productPrice, totalAmount]
+  docs: https://developer.dailyhunt.in/ads/docs/js-tracker-sdk-gtm/
+- name: ComScore attribution pixel
+  kind: tracking-pixel
+  description: >-
+    A ComScore Unified Digital Measurement pixel that syndication partners are required to fire once
+    per list view so Dailyhunt content page views are attributed correctly. The URL is not static —
+    it is returned per response in the Content Fetch payload at data.track.comscoreUrls. Two
+    documented deployment forms: an <img> injected by inline JavaScript for browser integrations, or
+    a direct HTTP call for native integrations (which must then persist and replay the cookie
+    ComScore sets).
+  source_field: data.track.comscoreUrls
+  docs: https://api-syndication.dailyhunt.in/
+- name: Dailyhunt ad specification gallery
+  kind: creative-spec-reference
+  description: >-
+    Static HTML previews of Dailyhunt ad units used to build advertiser creative. A reference
+    surface rather than an embeddable component.
+  url: http://adspecs.dailyhunt.in/
+  http_status: 200
+not_offered:
+- No embeddable content widget, feed component, web component or iframe embed is published for the
+  Content Syndication API — partners render the cards themselves from the JSON.
+- No embedded dashboard or hosted UI is published for the E-Commerce Shopping Catalog API.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://developer.dailyhunt.in/ads/docs/js-tracker-sdk/', http_status: 200}
+  - {url: 'https://developer.dailyhunt.in/ads/docs/js-tracker-sdk-gtm/', http_status: 200}
+  - {url: 'http://adspecs.dailyhunt.in/', http_status: 200}

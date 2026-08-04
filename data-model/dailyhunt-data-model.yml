@@ -1,0 +1,198 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml
+description: >-
+  Entity-relationship graph derived from the schema $refs and id-reference fields in the Dailyhunt
+  OpenAPI definitions. Two disjoint domains: the content syndication graph (channels, cards,
+  languages, feedback, tracking, cricket) and the commerce graph (catalog, product batch).
+domains:
+- name: content-syndication
+  api: openapi/dailyhunt-content-syndication-openapi.yml
+  root: Channel
+- name: shopping-catalog
+  api: openapi/dailyhunt-shopping-catalog-openapi.yml
+  root: Catalog
+entities:
+- name: Channel
+  domain: content-syndication
+  description: A topic under which content items are classified. Kinds are news, location, video and DailyShare (viral).
+  id_field: id
+  id_type: string
+  key_fields: [id, name, type, contentUrl, deepLinkUrl, appDeepLinkUrl]
+  discriminator: type
+  type_values: [FORYOU, DHTV, CRICKET]
+  operations: [listChannels, listLocationChannels, listVideoChannels]
+- name: Item
+  domain: content-syndication
+  description: A content card returned from a channel or from search.
+  id_field: id
+  id_type: string
+  key_fields: [id, title, description, type, contentType, uiType, publishTime, source, trackData]
+  discriminator: type
+  type_values: [STORY, VIDEO, PHOTO, ASTROLOGY, VHMEME, BANNER, QUESTION_MULTI_CHOICES, HTML]
+  operations: [fetchItems, searchContent]
+- name: ShareInfo
+  domain: content-syndication
+  description: Shortened share URL and pre-composed share string for an item.
+  operations: [fetchItems, searchContent]
+- name: Thumbnail
+  domain: content-syndication
+  description: Thumbnail URL with width and height, on DailyShare and search cards.
+  operations: [fetchItems, searchContent]
+- name: Language
+  domain: content-syndication
+  description: A supported content language.
+  id_field: code
+  id_type: string
+  key_fields: [code, name, nameUni]
+  operations: [listLanguages]
+- name: FeedbackOption
+  domain: content-syndication
+  description: A selectable feedback reason a partner displays against a card.
+  id_field: id
+  id_type: string
+  operations: [listFeedbackOptions]
+- name: FeedbackSubmission
+  domain: content-syndication
+  description: A user's selected feedback options bound to one card.
+  operations: [submitFeedback]
+- name: TrackingRequest
+  domain: content-syndication
+  description: A batch of viewed-card records the partner posts back to Dailyhunt.
+  operations: [trackViewedItems]
+- name: CricketMatch
+  domain: content-syndication
+  description: >-
+    A cricket match, surfaced as an Item of type CRICKET inside the Cricket channel; its id is the
+    matchId used by the score and commentary streams.
+  id_field: id
+  id_type: string
+  operations: [streamCricketScore, streamCricketCommentary]
+- name: CommentaryLine
+  domain: content-syndication
+  description: One ball-by-ball or end-of-over commentary line for a match.
+  id_field: id
+  id_type: string
+  operations: [streamCricketCommentary]
+- name: Catalog
+  domain: shopping-catalog
+  description: A named product catalog owned by a registered vendor.
+  id_field: catalog_id
+  id_type: uuid
+  key_fields: [id, name, created_on]
+  operations: [createCatalog, getCatalog]
+- name: ProductBatch
+  domain: shopping-catalog
+  description: An asynchronous batch of product mutations submitted against a catalog.
+  id_field: handles
+  id_type: uuid
+  operations: [submitProductBatch, getProductBatchStatus]
+- name: Product
+  domain: shopping-catalog
+  description: A single product row inside a batch, keyed by the vendor's own retailer_id.
+  id_field: retailer_id
+  id_type: string-or-integer
+  key_fields: [name, brand, price, sale_price, currency, availability, condition, category, product_type]
+  operations: [submitProductBatch]
+- name: Shipping
+  domain: shopping-catalog
+  description: A country/region shipping rate row on a product.
+  operations: [submitProductBatch]
+- name: AppLinks
+  domain: shopping-catalog
+  description: Android and iPhone deep links for a product.
+  operations: [submitProductBatch]
+relationships:
+- from: Channel
+  to: Channel
+  kind: has_many
+  via: subChannels
+  note: Location channels nest sub-channels of the same shape.
+- from: Channel
+  to: Item
+  kind: has_many
+  via: contentUrl
+  note: >-
+    Not a foreign key — the channel carries a fully-formed, pre-signed-parameter content fetch URL
+    that resolves to the channel's items via the `cid` query parameter.
+- from: Item
+  to: Channel
+  kind: belongs_to
+  via: cid
+  note: The cid request parameter, not a field on the item payload.
+- from: Item
+  to: Item
+  kind: has_many
+  via: collectionItems
+  note: Present only on QUESTION_MULTI_CHOICES cards.
+- from: Item
+  to: ShareInfo
+  kind: has_one
+  via: shareInfo
+- from: Item
+  to: Thumbnail
+  kind: has_one
+  via: thumbnail
+- from: Item
+  to: Language
+  kind: belongs_to
+  via: langCode
+  note: Language is a request-scope selector, not a field on the item.
+- from: FeedbackSubmission
+  to: Item
+  kind: belongs_to
+  via: itemId
+- from: FeedbackSubmission
+  to: FeedbackOption
+  kind: has_many
+  via: options[].id
+- from: TrackingRequest
+  to: Item
+  kind: has_many
+  via: stories[].id
+  note: Each row also replays the item's opaque trackData verbatim.
+- from: CommentaryLine
+  to: CricketMatch
+  kind: belongs_to
+  via: matchId
+- from: ProductBatch
+  to: Catalog
+  kind: belongs_to
+  via: catalog_id
+- from: Product
+  to: ProductBatch
+  kind: belongs_to
+  via: requests[]
+- from: Product
+  to: Product
+  kind: has_many
+  via: retailer_product_group_id
+  note: Variant grouping by the vendor's own product-group id.
+- from: Product
+  to: Shipping
+  kind: has_many
+  via: shipping
+- from: Product
+  to: AppLinks
+  kind: has_one
+  via: applinks
+opaque_tokens:
+  description: >-
+    Several identifiers in the content graph are server-generated opaque strings the client must
+    replay verbatim rather than parse or construct.
+  tokens:
+  - {field: trackData, on: Item, replayed_to: trackViewedItems}
+  - {field: pageScrollStart, on: nextPageUrl, purpose: pagination continuation}
+  - {field: psi, on: nextPageUrl, purpose: pagination/personalization state}
+  - {field: dsOffset, on: nextPageUrl, purpose: DailyShare offset}
+  - {field: dhFeedV1, on: cookie, purpose: per-user session identity}
+id_prefixes:
+  observed:
+  - {pattern: 'n<digits>', entity: Item, example_context: 'story card ids in published responses'}
+  note: Observed in the published example payloads only; Dailyhunt documents no id-prefix scheme.
+render: null
+x-evidence:
+  derived_on: '2026-08-04'
+  from:
+  - openapi/dailyhunt-content-syndication-openapi.yml
+  - openapi/dailyhunt-shopping-catalog-openapi.yml

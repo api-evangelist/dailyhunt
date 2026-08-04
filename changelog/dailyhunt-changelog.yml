@@ -1,0 +1,39 @@
+generated: '2026-08-04'
+method: searched
+source: https://api-syndication.dailyhunt.in/
+docs: https://api-syndication.dailyhunt.in/
+api: Dailyhunt Content Syndication API
+scheme: document-version
+current_version: '2.3'
+location: >-
+  The change log is a section inside the Partner Integration Reference itself, not a separate
+  changelog page or feed. There is no RSS/Atom feed, no dated release-notes site, and no changelog
+  for the E-Commerce Shopping Catalog API.
+entries:
+- version: '2.3'
+  date: '2021-08-24'
+  breaking: false
+  additions:
+  - Added `appDeepLinkUrl` to each row of the Items API.
+  - Added `appDeepLinkUrl`, `homeUrl` and `appHomeUrl` to the Channels API.
+  - Added the Search API under the Content Fetch section.
+- version: '2.2'
+  date: '2020-05-22'
+  breaking: false
+  additions:
+  - Included a shortened `shareInfo` and `shareUrl` for each item in the Items API.
+- version: '2.1'
+  date: '2020-01-29'
+  breaking: false
+  changes:
+  - Updated the Attribution section.
+observations:
+- The most recent published change is dated 2021-08-24, so the partner integration reference has not
+  been revised in the public document for roughly five years as of this probe.
+- Every published change is additive; no breaking change or removal appears in the log.
+- The document version (2.3) has drifted ahead of the header the collection ships, which still reads
+  "Version 2.2".
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://api-syndication.dailyhunt.in/
+  http_status: 200

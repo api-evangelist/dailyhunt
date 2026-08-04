@@ -1,0 +1,61 @@
+generated: '2026-08-04'
+method: searched
+source: https://api-syndication.dailyhunt.in/
+docs: https://api-syndication.dailyhunt.in/
+description: >-
+  Dailyhunt publishes a two-environment integration model for the Content Syndication API. Test and
+  production are separated by HOST, not by key prefix or mode flag, and each environment has its own
+  API key and secret key pair issued by Dailyhunt.
+environments:
+- name: Stage
+  host: qa-news.newshunt.com
+  port: 80
+  scheme: http
+  purpose: Stage integration environment for development and testing.
+  credentials: Separate stage API key and secret key, provisioned by Dailyhunt.
+- name: Prod
+  host: feed.dailyhunt.in
+  port: 80
+  scheme: http
+  purpose: The production environment.
+  credentials: Separate production API key and secret key, provisioned by Dailyhunt.
+  note: Does not resolve in public DNS (no A record) as of 2026-08-04.
+separation:
+  style: host-based
+  key_prefixes: none
+  mode_parameter: none
+  note: >-
+    There are no test-mode key prefixes and no mode/livemode flag. The published JavaScript reference
+    client selects the environment with an `env` value of `qa` or `prod`, which switches the domain
+    and the key pair.
+test_values:
+  published: false
+  note: >-
+    Dailyhunt publishes no magic test identifiers, no fixture content ids, no seeded channels and no
+    simulation triggers. The reference examples use placeholder partner codes (`YOUR_PARTNER_CODE`,
+    and sample values such as `samsung` and `oppo1` echoed inside captured responses) and a
+    placeholder `puid` of `test123`. These are documentation placeholders, not working test
+    credentials — nothing in the published surface is callable without provisioned keys.
+tooling:
+  postman_collection:
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+    local: postman/dailyhunt-content-syndication.postman_collection.json
+    features:
+    - >-
+      Ships a pre-request script that generates the HMAC-SHA1 request signature automatically, so a
+      partner can exercise the API from Postman once its own key, secret and partner code are pasted
+      into the environment.
+    - Ships a test environment definition alongside the collection.
+  reference_clients:
+  - {language: javascript, form: inline HTML/XHR sample using CryptoJS HMAC-SHA1, source: 'https://api-syndication.dailyhunt.in/'}
+  - {language: java, form: 'APIClient sample using javax.crypto Mac + commons-codec Base64', source: 'https://api-syndication.dailyhunt.in/'}
+shopping_catalog:
+  sandbox_published: false
+  note: >-
+    The E-Commerce Shopping Catalog guide documents no test environment, no sandbox host and no test
+    vendor credentials — only the live money.dailyhunt.in host.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://api-syndication.dailyhunt.in/', http_status: 200}
+  - {url: 'https://documenter.getpostman.com/view/8670292/SVmzsvnm', http_status: 200}

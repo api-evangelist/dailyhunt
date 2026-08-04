@@ -1,0 +1,104 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml, https://api-syndication.dailyhunt.in/
+description: >-
+  Which cross-cutting and industry standards the Dailyhunt public API surface conforms to, derived
+  from the published integration references and the OpenAPI derived from them. Dailyhunt publishes no
+  compliance program, certification list or trust center, so no Compliance pointer is emitted.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme and no OAuth flow documented; auth is a signed API key.
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any host (all probes 404 or SPA catch-all, 2026-08-04).
+- id: http-api-key-auth
+  conforms: true
+  evidence: API key sent in the Authorization header as `key=<API Key>` on every Content Syndication call.
+- id: hmac-request-signing
+  conforms: true
+  evidence: >-
+    Base64 HMAC-SHA1 over a canonicalized, lexicographically sorted, URL-encoded query string plus
+    the uppercased HTTP method, with a mandatory `ts` parameter in the signed set. The construction
+    is Dailyhunt's own; it is not AWS SigV4, OAuth 1.0a or RFC 9421 HTTP Message Signatures.
+- id: rfc9421-http-message-signatures
+  conforms: false
+  evidence: Signature is a bespoke header, not the RFC 9421 Signature/Signature-Input pair.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json response is documented anywhere; failures are bare HTTP status codes
+    with no body.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 (or an SPA catch-all) on every Dailyhunt host, probed 2026-08-04.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support and no deprecation policy is published.
+- id: rfc8615-well-known-uris
+  conforms: false
+  evidence: No /.well-known/ document is served on any Dailyhunt host; see well-known/dailyhunt-well-known.yml.
+- id: cors
+  conforms: true
+  evidence: >-
+    Dailyhunt documents OPTIONS preflight support returning Access-Control-Allow-Origin and
+    Access-Control-Allow-Credentials, explicitly to enable direct browser integration.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No provider-published OpenAPI/Swagger. /openapi.json, /swagger.json and /api-docs return 404 on
+    api-syndication.dailyhunt.in and developer.dailyhunt.in (probed 2026-08-04). The specs in
+    openapi/ are API Evangelist derivations of the published documentation and are labelled as such.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document and no event-driven surface. The "streams" cricket endpoints are polled HTTP
+    GETs with a version counter, not a subscription.
+- id: webhooks
+  conforms: false
+  evidence: >-
+    Dailyhunt publishes no webhooks. The Tracking API inverts the usual direction — the PARTNER posts
+    view events to Dailyhunt; Dailyhunt does not call back into the partner.
+- id: json-api
+  conforms: false
+  evidence: Custom `{code, data:{rows,count,pageNumber,nextPageUrl}}` envelope, not JSON:API.
+- id: cursor-pagination
+  conforms: partial
+  evidence: >-
+    Page-number pagination with an opaque server-generated `nextPageUrl` carrying continuation state
+    (pageScrollStart, psi, dsOffset). Cursor-like in practice but not published as a cursor contract.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No idempotency key, request de-duplication contract or retry-safety guidance on any write
+    operation. See conventions/dailyhunt-conventions.yml.
+- id: rate-limit-headers
+  conforms: false
+  evidence: No rate limits, quotas or RateLimit/Retry-After headers are published.
+- id: bcp47-language-tags
+  conforms: partial
+  evidence: >-
+    Language codes are ISO 639-1 two-letter codes (en, hi, mr, gu, pa, bn, kn, ta, te, ml, ur, ne)
+    with `or` for Odia and `bh` for Bhojpuri — `bh` is a deprecated ISO 639-2 collection code rather
+    than a valid BCP 47 primary subtag (the current tag is `bho`).
+- id: tls-transport-security
+  conforms: partial
+  evidence: >-
+    Documentation hosts serve TLS 1.3, but the published production and stage base URLs and every
+    worked example in the integration reference use plain HTTP on port 80, and the image CDN template
+    is http:// as well. See security/dailyhunt-domain-security.yml.
+compliance_program:
+  published: false
+  certifications: []
+  trust_center: null
+  note: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP, CSA STAR or equivalent certification is published,
+    and no trust center exists on trust./security./compliance paths (probed 2026-08-04). Dailyhunt
+    publishes a privacy policy and cookie policy only. No `Compliance` pointer is emitted.
+x-evidence:
+  fetched: '2026-08-04'
+  urls:
+  - {url: 'https://api-syndication.dailyhunt.in/', http_status: 200}
+  - {url: 'https://api-syndication.dailyhunt.in/.well-known/security.txt', http_status: 404}
+  - {url: 'https://api-syndication.dailyhunt.in/openapi.json', http_status: 404}
+  - {url: 'https://developer.dailyhunt.in/openapi.json', http_status: 404}

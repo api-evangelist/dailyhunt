@@ -30,28 +30,16 @@ tags:
 - India
 - Mobile
 apis:
-- aid: dailyhunt:content-syndication
-  name: Dailyhunt Content Syndication API
-  description: 'The partner-facing API that syndicates Dailyhunt''s editorial catalogue into a
-    partner''s own app, browser, device home screen or PWA. It covers channel discovery (news,
-    location, video and DailyShare/viral channels), paginated content fetch for a channel''s cards,
-    keyword search, the supported-language list, card feedback capture, live cricket score and
-    commentary streaming, and a view-tracking callback. Every request is signed with a Base64
-    HMAC-SHA1 signature over the sorted query string plus the HTTP method, using a secret key issued
-    at onboarding, and carries a per-user partner id (puid). Advanced surfaces are gated behind a
-    per-partner feature mask.'
+- aid: dailyhunt:dailyhunt-catalog-api
+  name: Dailyhunt Catalog API
+  description: Create and read a vendor catalog.
   humanURL: https://api-syndication.dailyhunt.in/
   baseURL: http://feed.dailyhunt.in/api/v2/syndication
   tags:
-  - News
-  - Content Syndication
-  - Search
-  - Video
-  - Sports
-  - Media
+  - Catalog
   properties:
   - type: OpenAPI
-    url: openapi/dailyhunt-content-syndication-openapi.yml
+    url: openapi/dailyhunt-catalog-api-openapi.yml
   - type: Documentation
     url: https://api-syndication.dailyhunt.in/
   - type: APIReference
@@ -60,53 +48,156 @@ apis:
     url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
   - type: PostmanCollection
     url: postman/dailyhunt-content-syndication.postman_collection.json
-  - type: Overlay
-    url: overlays/dailyhunt-content-syndication-overlay.yaml
-  - type: AgentSkill
-    url: skills/dailyhunt-syndicate-a-channel-feed.md
-  - type: AgentSkill
-    url: skills/dailyhunt-search-and-track-content.md
-  x-evidence:
-    fetched: '2026-08-04'
-    documentation_url: https://api-syndication.dailyhunt.in/
-    documentation_http_status: 200
-    collection_url: https://api-syndication.dailyhunt.in/api/collections/9554411/SW7gSj34
-    collection_http_status: 200
-    base_host_dns: 'feed.dailyhunt.in has no public A record (partner-gated); probed 2026-08-04'
-- aid: dailyhunt:shopping-catalog
-  name: Dailyhunt E-Commerce Shopping Catalog API
-  description: 'Lets a registered commerce vendor create a product catalog inside the Dailyhunt
-    system and batch-submit CREATE/UPDATE/DELETE product rows against it, each carrying the standard
-    product-feed attributes (price, sale window, availability, condition, category, size, colour,
-    GTIN, inventory, images, shipping rows and Android/iPhone app links). Batches are asynchronous:
-    the API returns a handle the vendor polls for completion and per-row errors. Authenticated with a
-    vendor access token issued at registration.'
-  humanURL: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
-  baseURL: https://money.dailyhunt.in/shopping-catalog/v1
-  tags:
-  - E-Commerce
-  - Product Catalog
-  - Advertising
-  - Data Ingestion
-  properties:
-  - type: OpenAPI
-    url: openapi/dailyhunt-shopping-catalog-openapi.yml
   - type: Documentation
     url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
-  - type: Overlay
-    url: overlays/dailyhunt-shopping-catalog-overlay.yaml
-  - type: AgentSkill
-    url: skills/dailyhunt-upload-a-product-catalog.md
-  x-evidence:
-    fetched: '2026-08-04'
-    documentation_url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
-    documentation_http_status: 200
+- aid: dailyhunt:dailyhunt-channels-api
+  name: Dailyhunt Channels API
+  description: Discovery of the content channels a partner is entitled to consume.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-channels-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-content-fetch-api
+  name: Dailyhunt Content Fetch API
+  description: Paginated retrieval of the content cards inside a channel, plus keyword search.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Content Fetch
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-content-fetch-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-cricket-api
+  name: Dailyhunt Cricket API
+  description: Live cricket match score and commentary streaming.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Cricket
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-cricket-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-feedback-api
+  name: Dailyhunt Feedback API
+  description: Fetch the feedback options to display to a user and submit the user's selection.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-feedback-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-languages-api
+  name: Dailyhunt Languages API
+  description: The languages Dailyhunt's content feeds support.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Languages
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-languages-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-products-api
+  name: Dailyhunt Products API
+  description: Batch create, update and delete products inside a catalog, and poll batch status.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-products-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
+- aid: dailyhunt:dailyhunt-tracking-api
+  name: Dailyhunt Tracking API
+  description: Partner callback reporting which cards a user actually saw.
+  humanURL: https://api-syndication.dailyhunt.in/
+  baseURL: http://feed.dailyhunt.in/api/v2/syndication
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/dailyhunt-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://api-syndication.dailyhunt.in/
+  - type: APIReference
+    url: https://api-syndication.dailyhunt.in/
+  - type: Postman
+    url: https://documenter.getpostman.com/view/8670292/SVmzsvnm
+  - type: PostmanCollection
+    url: postman/dailyhunt-content-syndication.postman_collection.json
+  - type: Documentation
+    url: https://developer.dailyhunt.in/ads/docs/shopping-catalog/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/dailyhunt-content-syndication-overlay.yaml
 - type: Website
   url: https://www.dailyhunt.in/
 - type: DeveloperPortal

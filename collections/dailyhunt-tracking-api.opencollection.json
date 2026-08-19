@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt Content Syndication Tracking API",
+    "version": "2.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Report cards seen by the user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/tracking",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reports the cards a user actually saw. The partner posts an array of `{id, trackData}` pairs (the `trackData` value comes verbatim from the card in the Content Fetch response) together with the view timestamp. Callers should POST to the `trackUrl` returned by the Content Fetch API, appending `partner`, `puid` and `ts`, once per list view."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

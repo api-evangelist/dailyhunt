@@ -1,0 +1,853 @@
+{
+  "item": [
+    {
+      "id": "218a5329-074b-45bb-8132-f7dd1973d5ae",
+      "name": "Content Fetch",
+      "description": {
+        "content": "Paginated retrieval of the content cards inside a channel, plus keyword search.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b6899fa1-6fcc-4f19-a2ff-a8792202f747",
+          "name": "Fetch content cards from a channel",
+          "request": {
+            "name": "Fetch content cards from a channel",
+            "description": {
+              "content": "Returns the paginated content cards (stories, videos, photos, DailyShare cards, banners, polls, HTML cards) for the channel identified by `cid`. Callers should prefer the `contentUrl` returned by the Channels API, which already carries the correct `fm` for the channel, and follow `nextPageUrl` for pagination. The response also carries the `trackUrl` and per-card `trackData` that must be POSTed back to the Tracking API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "syndication",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partner",
+                  "value": "<string>",
+                  "description": "(Required) The partner identification code issued by Dailyhunt at onboarding."
+                },
+                {
+                  "disabled": false,
+                  "key": "cid",
+                  "value": "<string>",
+                  "description": "(Required) Channel id whose content cards should be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "langCode",
+                  "value": "<string>",
+                  "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+                },
+                {
+                  "disabled": false,
+                  "key": "ts",
+                  "value": "<long>",
+                  "description": "(Required) Current client timestamp in milliseconds; must be included in the signed parameter set."
+                },
+                {
+                  "disabled": false,
+                  "key": "puid",
+                  "value": "<string>",
+                  "description": "(Required) The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+                },
+                {
+                  "disabled": false,
+                  "key": "pfm",
+                  "value": "<integer>",
+                  "description": "Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved."
+                },
+                {
+                  "disabled": false,
+                  "key": "fm",
+                  "value": "<integer>",
+                  "description": "Channel-level feature mask. Inherited from the channel `contentUrl`; only override when a specific change is needed for one channel."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Field selection modifier as published in the reference (for example `none`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Number of records per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Zero-based page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b39c59e5-c9fa-4733-862a-c16d46f374f7",
+              "name": "A paginated list of content cards.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pfm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 110,\n  \"data\": {\n    \"rows\": [\n      {\n        \"id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"deepLinkUrl\": \"string\",\n        \"appDeepLinkUrl\": \"string\",\n        \"publishTime\": 9944,\n        \"images\": [\n          \"string\",\n          \"string\"\n        ],\n        \"imageCount\": 4266,\n        \"source\": \"string\",\n        \"sourceLogo\": \"string\",\n        \"type\": \"string\",\n        \"contentType\": \"string\",\n        \"trackData\": \"string\",\n        \"uiType\": \"string\",\n        \"label\": \"string\",\n        \"duration\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"nsfw\": true,\n        \"thumbnail\": {\n          \"url\": \"string\",\n          \"width\": 352,\n          \"height\": 7350\n        },\n        \"shareCount\": \"string\",\n        \"authorName\": \"string\",\n        \"recommendationTs\": 4993,\n        \"shareInfo\": {\n          \"shareString\": \"string\",\n          \"shareUrl\": \"string\"\n        },\n        \"collectionItems\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"deepLinkUrl\": \"string\",\n        \"appDeepLinkUrl\": \"string\",\n        \"publishTime\": 3861,\n        \"images\": [\n          \"string\",\n          \"string\"\n        ],\n        \"imageCount\": 9172,\n        \"source\": \"string\",\n        \"sourceLogo\": \"string\",\n        \"type\": \"string\",\n        \"contentType\": \"string\",\n        \"trackData\": \"string\",\n        \"uiType\": \"string\",\n        \"label\": \"string\",\n        \"duration\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"nsfw\": true,\n        \"thumbnail\": {\n          \"url\": \"string\",\n          \"width\": 6038,\n          \"height\": 1964\n        },\n        \"shareCount\": \"string\",\n        \"authorName\": \"string\",\n        \"recommendationTs\": 3136,\n        \"shareInfo\": {\n          \"shareString\": \"string\",\n          \"shareUrl\": \"string\"\n        },\n        \"collectionItems\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          }\n        ]\n      }\n    ],\n    \"pageNumber\": 5878,\n    \"count\": 5823,\n    \"nextPageUrl\": \"string\",\n    \"trackUrl\": \"string\",\n    \"track\": {\n      \"comscoreUrls\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbe25591-3d3d-4eb2-bb88-8e9e5299af8b",
+              "name": "Invalid API key given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pfm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f53d927-72bf-4e25-9b65-3937ed879bb8",
+              "name": "Invalid signature given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pfm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "259c2a4c-b680-4a61-88a1-cff414a6d134",
+              "name": "Any unexpected issue at Dailyhunt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pfm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c518e486-9fa0-4347-bd37-7e5e4cb4d30d",
+          "name": "Search content",
+          "request": {
+            "name": "Search content",
+            "description": {
+              "content": "Returns content cards matching a user-supplied search query.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "syndication",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partner",
+                  "value": "<string>",
+                  "description": "(Required) The partner identification code issued by Dailyhunt at onboarding."
+                },
+                {
+                  "disabled": false,
+                  "key": "langCode",
+                  "value": "<string>",
+                  "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+                },
+                {
+                  "disabled": false,
+                  "key": "ts",
+                  "value": "<long>",
+                  "description": "(Required) Current client timestamp in milliseconds; must be included in the signed parameter set."
+                },
+                {
+                  "disabled": false,
+                  "key": "puid",
+                  "value": "<string>",
+                  "description": "(Required) The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) The user's search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Number of records per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "Zero-based page number of the paginated response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "45fff4d1-a827-4599-ade7-286e82861782",
+              "name": "A paginated list of matching content cards.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 4011,\n  \"data\": {\n    \"rows\": [\n      {\n        \"id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"deepLinkUrl\": \"string\",\n        \"appDeepLinkUrl\": \"string\",\n        \"publishTime\": 1630,\n        \"images\": [\n          \"string\",\n          \"string\"\n        ],\n        \"imageCount\": 7083,\n        \"source\": \"string\",\n        \"sourceLogo\": \"string\",\n        \"type\": \"string\",\n        \"contentType\": \"string\",\n        \"trackData\": \"string\",\n        \"uiType\": \"string\",\n        \"label\": \"string\",\n        \"duration\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"nsfw\": false,\n        \"thumbnail\": {\n          \"url\": \"string\",\n          \"width\": 3019,\n          \"height\": 2782\n        },\n        \"shareCount\": \"string\",\n        \"authorName\": \"string\",\n        \"recommendationTs\": 6752,\n        \"shareInfo\": {\n          \"shareString\": \"string\",\n          \"shareUrl\": \"string\"\n        },\n        \"collectionItems\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"deepLinkUrl\": \"string\",\n        \"appDeepLinkUrl\": \"string\",\n        \"publishTime\": 98,\n        \"images\": [\n          \"string\",\n          \"string\"\n        ],\n        \"imageCount\": 8833,\n        \"source\": \"string\",\n        \"sourceLogo\": \"string\",\n        \"type\": \"string\",\n        \"contentType\": \"string\",\n        \"trackData\": \"string\",\n        \"uiType\": \"string\",\n        \"label\": \"string\",\n        \"duration\": \"string\",\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"nsfw\": false,\n        \"thumbnail\": {\n          \"url\": \"string\",\n          \"width\": 8281,\n          \"height\": 7644\n        },\n        \"shareCount\": \"string\",\n        \"authorName\": \"string\",\n        \"recommendationTs\": 5961,\n        \"shareInfo\": {\n          \"shareString\": \"string\",\n          \"shareUrl\": \"string\"\n        },\n        \"collectionItems\": [\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          },\n          {\n            \"value\": \"<Circular reference to #/components/schemas/Item detected>\"\n          }\n        ]\n      }\n    ],\n    \"pageNumber\": 1870,\n    \"count\": 4815,\n    \"nextPageUrl\": \"string\",\n    \"trackUrl\": \"string\",\n    \"track\": {\n      \"comscoreUrls\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94781821-4ed0-432f-986f-63c6f294db73",
+              "name": "Invalid API key given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9050ff1b-5dc7-4660-88bd-6a389fd4d502",
+              "name": "Invalid signature given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2bddc53a-cbd4-46aa-bd84-b8999006b27b",
+              "name": "Any unexpected issue at Dailyhunt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "langCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://feed.dailyhunt.in",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "047a1d5e-5ba3-49fa-b474-206da2ad9bb3",
+    "name": "Dailyhunt Content Syndication Content Fetch API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt's editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).\nThis OpenAPI was DERIVED by API Evangelist from Dailyhunt's own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.\n\nContact Support:\n Name: Dailyhunt Content Syndication — Partner Integration",
+      "type": "text/plain"
+    }
+  }
+}

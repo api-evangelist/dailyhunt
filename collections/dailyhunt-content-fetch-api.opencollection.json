@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt Content Syndication Content Fetch API",
+    "version": "2.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Content Fetch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch content cards from a channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/items",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "query",
+                "description": "Channel id whose content cards should be returned."
+              },
+              {
+                "name": "langCode",
+                "value": "",
+                "type": "query",
+                "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "pfm",
+                "value": "",
+                "type": "query",
+                "description": "Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved."
+              },
+              {
+                "name": "fm",
+                "value": "",
+                "type": "query",
+                "description": "Channel-level feature mask. Inherited from the channel `contentUrl`; only override when a specific change is needed for one channel."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Field selection modifier as published in the reference (for example `none`)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              }
+            ]
+          },
+          "docs": "Returns the paginated content cards (stories, videos, photos, DailyShare cards, banners, polls, HTML cards) for the channel identified by `cid`. Callers should prefer the `contentUrl` returned by the Channels API, which already carries the correct `fm` for the channel, and follow `nextPageUrl` for pagination. The response also carries the `trackUrl` and per-card `trackData` that must be POSTed back to the Tracking API."
+        },
+        {
+          "info": {
+            "name": "Search content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/search",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "langCode",
+                "value": "",
+                "type": "query",
+                "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The user's search query."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              }
+            ]
+          },
+          "docs": "Returns content cards matching a user-supplied search query."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

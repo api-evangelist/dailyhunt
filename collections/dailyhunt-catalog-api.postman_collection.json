@@ -1,0 +1,248 @@
+{
+  "item": [
+    {
+      "id": "4ac3b66f-1a84-4e2b-ae8c-a34c27e56dc9",
+      "name": "Catalog",
+      "description": {
+        "content": "Create and read a vendor catalog.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eee04f6e-e954-4c03-91ba-c1667f066310",
+          "name": "Add a catalog",
+          "request": {
+            "name": "Add a catalog",
+            "description": {
+              "content": "Creates a catalog under the vendor and returns its generated catalog id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shopping-catalog",
+                "v1",
+                "catalog",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"<string>\",\n  \"catalog_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "659d92d7-c873-46b8-b88d-bae4d8971ff7",
+              "name": "Catalog created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping-catalog",
+                    "v1",
+                    "catalog",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_token\": \"<string>\",\n  \"catalog_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"catalog_id\": \"b68b62c9-34a9-85cf-10ae-cd37643c4d77\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09a90eb5-7036-42b6-ac3a-47861ab37373",
+          "name": "Fetch a catalog",
+          "request": {
+            "name": "Fetch a catalog",
+            "description": {
+              "content": "Returns the details of a catalog belonging to the vendor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shopping-catalog",
+                "v1",
+                "catalog",
+                ":catalog_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "catalog_id",
+                  "description": "(Required) The catalog id returned when the catalog was created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1be8bc6-53f8-42db-9ad2-ffd8aec8b792",
+              "name": "Catalog detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping-catalog",
+                    "v1",
+                    "catalog",
+                    ":catalog_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "catalog_id",
+                      "description": "(Required) The catalog id returned when the catalog was created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7a17129d-8969-e875-195b-30ab22f78448\",\n  \"name\": \"string\",\n  \"created_on\": 5024\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://money.dailyhunt.in",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b6bd4331-7dbc-4b00-845c-402748465b73",
+    "name": "Dailyhunt E-Commerce Shopping Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dailyhunt E-Commerce Shopping Catalog API lets a registered commerce vendor upload and maintain its product catalogue inside the Dailyhunt system so those products can be onboarded for shopping and advertising surfaces. A vendor creates a named catalog, then submits batched CREATE / UPDATE / DELETE product requests keyed by `retailer_id`, each carrying the standard product-feed attributes (name, brand, price, sale price and sale window, currency, availability, condition, category and product type, colour, size, pattern, gender, age group, GTIN, inventory, image URL and additional image URLs, landing URL, shipping rows and Android/iPhone app links, plus custom labels). Batch submission is asynchronous: the API returns a handle, and the vendor polls a status endpoint for completion and per-request errors. Authentication is a vendor `access_token` passed in the JSON request body — the vendor must already be registered and credentialed by Dailyhunt.\nThis OpenAPI was DERIVED by API Evangelist from Dailyhunt's own public E-Commerce Catalog Integration Guide at https://developer.dailyhunt.in/ads/docs/shopping-catalog/ — every endpoint, method, mandatory field, request body and response body was transcribed from that page. It is NOT a provider-published specification; Dailyhunt publishes no machine-readable spec for this API (probes of /openapi.json, /swagger.json and /api-docs on developer.dailyhunt.in returned HTTP 404 on 2026-08-04).\n\nContact Support:\n Name: Dailyhunt Ads Tech Team\n Email: ads-tech-team@verse.in",
+      "type": "text/plain"
+    }
+  }
+}

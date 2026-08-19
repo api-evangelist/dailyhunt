@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt Content Syndication Languages API",
+    "version": "2.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Languages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List supported languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/languages",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              }
+            ]
+          },
+          "docs": "Returns the languages Dailyhunt's content feeds support, each with an English label, a unicode label and a language code. Fourteen codes are published — en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

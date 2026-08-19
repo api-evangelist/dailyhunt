@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt E-Commerce Shopping Catalog Products API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add, update or delete products in a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://money.dailyhunt.in/shopping-catalog/v1/catalog/:catalog_id/batch",
+            "params": [
+              {
+                "name": "catalog_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a batch of product mutations for the catalog. Each request row carries a `method` (CREATE, UPDATE or DELETE), a `retailer_id` and, for CREATE and UPDATE, a `data` object of product attributes. Returns a handle used to poll batch status."
+        },
+        {
+          "info": {
+            "name": "Fetch status of a submitted product batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://money.dailyhunt.in/shopping-catalog/v1/catalog/:catalog_id/batch/status",
+            "params": [
+              {
+                "name": "catalog_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "handler",
+                "value": "",
+                "type": "query",
+                "description": "The handle returned by the batch submission."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the processing status and any per-request errors for a submitted batch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

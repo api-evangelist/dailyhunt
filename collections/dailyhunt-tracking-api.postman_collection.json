@@ -1,0 +1,304 @@
+{
+  "item": [
+    {
+      "id": "eaa7943d-3c68-451d-88ff-226848b8f36c",
+      "name": "Tracking",
+      "description": {
+        "content": "Partner callback reporting which cards a user actually saw.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "352424b9-e3c8-4204-bb4c-c588dcb8b310",
+          "name": "Report cards seen by the user",
+          "request": {
+            "name": "Report cards seen by the user",
+            "description": {
+              "content": "Reports the cards a user actually saw. The partner posts an array of `{id, trackData}` pairs (the `trackData` value comes verbatim from the card in the Content Fetch response) together with the view timestamp. Callers should POST to the `trackUrl` returned by the Content Fetch API, appending `partner`, `puid` and `ts`, once per list view.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "syndication",
+                "tracking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partner",
+                  "value": "<string>",
+                  "description": "(Required) The partner identification code issued by Dailyhunt at onboarding."
+                },
+                {
+                  "disabled": false,
+                  "key": "puid",
+                  "value": "<string>",
+                  "description": "(Required) The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+                },
+                {
+                  "disabled": false,
+                  "key": "ts",
+                  "value": "<long>",
+                  "description": "(Required) Current client timestamp in milliseconds; must be included in the signed parameter set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"viewedDate\": \"<long>\",\n  \"stories\": [\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f949b9e-556f-487f-8cb8-6bbbda06ae40",
+              "name": "Successful processing. No content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"viewedDate\": \"<long>\",\n  \"stories\": [\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "39f6654b-e0a9-403d-a2e2-3335aff379c5",
+              "name": "Bad request detected.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"viewedDate\": \"<long>\",\n  \"stories\": [\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f90ba489-5c36-4205-b24e-a9e2ce4dfa9d",
+              "name": "Any unexpected issue at Dailyhunt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "puid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"viewedDate\": \"<long>\",\n  \"stories\": [\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"trackData\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://feed.dailyhunt.in",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f977d1f8-560e-466b-bca9-7f86425cbaba",
+    "name": "Dailyhunt Content Syndication Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt's editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).\nThis OpenAPI was DERIVED by API Evangelist from Dailyhunt's own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.\n\nContact Support:\n Name: Dailyhunt Content Syndication — Partner Integration",
+      "type": "text/plain"
+    }
+  }
+}

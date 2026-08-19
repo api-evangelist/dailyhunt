@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt Content Syndication Cricket API",
+    "version": "2.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cricket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stream cricket match score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/streams/cricket/score",
+            "params": [
+              {
+                "name": "matchId",
+                "value": "",
+                "type": "query",
+                "description": "The cricket match id whose score should be streamed."
+              },
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              }
+            ]
+          },
+          "docs": "Streams the live score for a match. The response carries a compact `ScoreDetail` object (`s`) with the scoreboard (`sb`), the team innings detail (`ti`) and the last wicket (`lw`), plus a streaming version counter (`v`)."
+        },
+        {
+          "info": {
+            "name": "Stream cricket match commentary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/streams/cricket/commentary",
+            "params": [
+              {
+                "name": "matchId",
+                "value": "",
+                "type": "query",
+                "description": "The cricket match id whose commentary should be streamed."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The number of commentary lines (per ball or per end-of-over) in a page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              },
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              }
+            ]
+          },
+          "docs": "Streams paginated ball-by-ball and end-of-over commentary lines for a match."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

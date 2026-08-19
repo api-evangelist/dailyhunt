@@ -1,0 +1,302 @@
+{
+  "item": [
+    {
+      "id": "45eebcdc-7c3b-47b0-b41b-207450e291a3",
+      "name": "Products",
+      "description": {
+        "content": "Batch create, update and delete products inside a catalog, and poll batch status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "285b567e-572e-40ad-8026-93c67c4ca703",
+          "name": "Add, update or delete products in a catalog",
+          "request": {
+            "name": "Add, update or delete products in a catalog",
+            "description": {
+              "content": "Submits a batch of product mutations for the catalog. Each request row carries a `method` (CREATE, UPDATE or DELETE), a `retailer_id` and, for CREATE and UPDATE, a `data` object of product attributes. Returns a handle used to poll batch status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shopping-catalog",
+                "v1",
+                "catalog",
+                ":catalog_id",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "catalog_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"<string>\",\n  \"requests\": [\n    {\n      \"method\": \"<string>\",\n      \"retailer_id\": \"<string,integer>\",\n      \"data\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"brand\": \"<string>\",\n        \"category\": \"<string>\",\n        \"product_type\": \"<string>\",\n        \"price\": \"<string>\",\n        \"sale_price\": \"<string>\",\n        \"sale_price_start_date\": \"<string>\",\n        \"sale_price_end_date\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"availability\": \"<string>\",\n        \"condition\": \"<string>\",\n        \"inventory\": \"<integer>\",\n        \"gtin\": \"<string>\",\n        \"color\": \"<string>\",\n        \"size\": \"<string>\",\n        \"pattern\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"age_group\": \"<string>\",\n        \"url\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"additional_image_urls\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"retailer_product_group_id\": \"<string>\",\n        \"shipping\": [\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          },\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          }\n        ],\n        \"applinks\": {\n          \"android\": [\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            }\n          ],\n          \"iphone\": [\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            }\n          ]\n        },\n        \"custom_label_2\": \"<string>\",\n        \"custom_label_3\": \"<string>\",\n        \"custom_label_4\": \"<string>\"\n      }\n    },\n    {\n      \"method\": \"<string>\",\n      \"retailer_id\": \"<string,integer>\",\n      \"data\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"brand\": \"<string>\",\n        \"category\": \"<string>\",\n        \"product_type\": \"<string>\",\n        \"price\": \"<string>\",\n        \"sale_price\": \"<string>\",\n        \"sale_price_start_date\": \"<string>\",\n        \"sale_price_end_date\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"availability\": \"<string>\",\n        \"condition\": \"<string>\",\n        \"inventory\": \"<integer>\",\n        \"gtin\": \"<string>\",\n        \"color\": \"<string>\",\n        \"size\": \"<string>\",\n        \"pattern\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"age_group\": \"<string>\",\n        \"url\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"additional_image_urls\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"retailer_product_group_id\": \"<string>\",\n        \"shipping\": [\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          },\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          }\n        ],\n        \"applinks\": {\n          \"android\": [\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            }\n          ],\n          \"iphone\": [\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            }\n          ]\n        },\n        \"custom_label_2\": \"<string>\",\n        \"custom_label_3\": \"<string>\",\n        \"custom_label_4\": \"<string>\"\n      }\n    }\n  ],\n  \"item_type\": \"<string>\",\n  \"allow_upsert\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3fca74b6-3313-4b1b-aee1-bf803af5c070",
+              "name": "Batch accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping-catalog",
+                    "v1",
+                    "catalog",
+                    ":catalog_id",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "catalog_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_token\": \"<string>\",\n  \"requests\": [\n    {\n      \"method\": \"<string>\",\n      \"retailer_id\": \"<string,integer>\",\n      \"data\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"brand\": \"<string>\",\n        \"category\": \"<string>\",\n        \"product_type\": \"<string>\",\n        \"price\": \"<string>\",\n        \"sale_price\": \"<string>\",\n        \"sale_price_start_date\": \"<string>\",\n        \"sale_price_end_date\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"availability\": \"<string>\",\n        \"condition\": \"<string>\",\n        \"inventory\": \"<integer>\",\n        \"gtin\": \"<string>\",\n        \"color\": \"<string>\",\n        \"size\": \"<string>\",\n        \"pattern\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"age_group\": \"<string>\",\n        \"url\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"additional_image_urls\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"retailer_product_group_id\": \"<string>\",\n        \"shipping\": [\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          },\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          }\n        ],\n        \"applinks\": {\n          \"android\": [\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            }\n          ],\n          \"iphone\": [\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            }\n          ]\n        },\n        \"custom_label_2\": \"<string>\",\n        \"custom_label_3\": \"<string>\",\n        \"custom_label_4\": \"<string>\"\n      }\n    },\n    {\n      \"method\": \"<string>\",\n      \"retailer_id\": \"<string,integer>\",\n      \"data\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"brand\": \"<string>\",\n        \"category\": \"<string>\",\n        \"product_type\": \"<string>\",\n        \"price\": \"<string>\",\n        \"sale_price\": \"<string>\",\n        \"sale_price_start_date\": \"<string>\",\n        \"sale_price_end_date\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"availability\": \"<string>\",\n        \"condition\": \"<string>\",\n        \"inventory\": \"<integer>\",\n        \"gtin\": \"<string>\",\n        \"color\": \"<string>\",\n        \"size\": \"<string>\",\n        \"pattern\": \"<string>\",\n        \"gender\": \"<string>\",\n        \"age_group\": \"<string>\",\n        \"url\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"additional_image_urls\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"retailer_product_group_id\": \"<string>\",\n        \"shipping\": [\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          },\n          {\n            \"country\": \"<string>\",\n            \"region\": \"<string>\",\n            \"service\": \"<string>\",\n            \"price_value\": \"<string>\",\n            \"price_currency\": \"<string>\"\n          }\n        ],\n        \"applinks\": {\n          \"android\": [\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_name\": \"<string>\",\n              \"package\": \"<string>\",\n              \"class\": \"<string>\"\n            }\n          ],\n          \"iphone\": [\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            },\n            {\n              \"url\": \"<string>\",\n              \"app_store_id\": \"<integer>\",\n              \"app_name\": \"<string>\"\n            }\n          ]\n        },\n        \"custom_label_2\": \"<string>\",\n        \"custom_label_3\": \"<string>\",\n        \"custom_label_4\": \"<string>\"\n      }\n    }\n  ],\n  \"item_type\": \"<string>\",\n  \"allow_upsert\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"handles\": \"758c6f0e-d76a-1aef-d2b8-24a99f88776b\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b58d07e7-0e92-4b60-b0f0-af2af4f952ac",
+          "name": "Fetch status of a submitted product batch",
+          "request": {
+            "name": "Fetch status of a submitted product batch",
+            "description": {
+              "content": "Returns the processing status and any per-request errors for a submitted batch.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shopping-catalog",
+                "v1",
+                "catalog",
+                ":catalog_id",
+                "batch",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "handler",
+                  "value": "<uuid>",
+                  "description": "(Required) The handle returned by the batch submission."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "catalog_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "946fafc1-7f79-4193-b60c-8ea8036b01bc",
+              "name": "Batch status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shopping-catalog",
+                    "v1",
+                    "catalog",
+                    ":catalog_id",
+                    "batch",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "handler",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "catalog_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"status\": \"string\",\n      \"errors_total_count\": 5973\n    },\n    {\n      \"status\": \"string\",\n      \"errors_total_count\": 6906\n    }\n  ],\n  \"updated_on\": 6942\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://money.dailyhunt.in",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ebc5e283-aa71-4574-9759-7cc2fbc708cd",
+    "name": "Dailyhunt E-Commerce Shopping Catalog Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dailyhunt E-Commerce Shopping Catalog API lets a registered commerce vendor upload and maintain its product catalogue inside the Dailyhunt system so those products can be onboarded for shopping and advertising surfaces. A vendor creates a named catalog, then submits batched CREATE / UPDATE / DELETE product requests keyed by `retailer_id`, each carrying the standard product-feed attributes (name, brand, price, sale price and sale window, currency, availability, condition, category and product type, colour, size, pattern, gender, age group, GTIN, inventory, image URL and additional image URLs, landing URL, shipping rows and Android/iPhone app links, plus custom labels). Batch submission is asynchronous: the API returns a handle, and the vendor polls a status endpoint for completion and per-request errors. Authentication is a vendor `access_token` passed in the JSON request body — the vendor must already be registered and credentialed by Dailyhunt.\nThis OpenAPI was DERIVED by API Evangelist from Dailyhunt's own public E-Commerce Catalog Integration Guide at https://developer.dailyhunt.in/ads/docs/shopping-catalog/ — every endpoint, method, mandatory field, request body and response body was transcribed from that page. It is NOT a provider-published specification; Dailyhunt publishes no machine-readable spec for this API (probes of /openapi.json, /swagger.json and /api-docs on developer.dailyhunt.in returned HTTP 404 on 2026-08-04).\n\nContact Support:\n Name: Dailyhunt Ads Tech Team\n Email: ads-tech-team@verse.in",
+      "type": "text/plain"
+    }
+  }
+}

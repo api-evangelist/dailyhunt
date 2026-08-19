@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt E-Commerce Shopping Catalog API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://money.dailyhunt.in/shopping-catalog/v1/catalog/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a catalog under the vendor and returns its generated catalog id."
+        },
+        {
+          "info": {
+            "name": "Fetch a catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://money.dailyhunt.in/shopping-catalog/v1/catalog/:catalog_id",
+            "params": [
+              {
+                "name": "catalog_id",
+                "value": "",
+                "type": "path",
+                "description": "The catalog id returned when the catalog was created."
+              }
+            ]
+          },
+          "docs": "Returns the details of a catalog belonging to the vendor."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

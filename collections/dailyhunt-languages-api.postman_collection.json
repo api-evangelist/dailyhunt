@@ -1,0 +1,308 @@
+{
+  "item": [
+    {
+      "id": "71d92463-7beb-4588-bf4b-6e5604cfe4cd",
+      "name": "Languages",
+      "description": {
+        "content": "The languages Dailyhunt's content feeds support.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "887658e4-a306-4331-a3f4-a71f0432aafc",
+          "name": "List supported languages",
+          "request": {
+            "name": "List supported languages",
+            "description": {
+              "content": "Returns the languages Dailyhunt's content feeds support, each with an English label, a unicode label and a language code. Fourteen codes are published — en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "syndication",
+                "languages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partner",
+                  "value": "<string>",
+                  "description": "(Required) The partner identification code issued by Dailyhunt at onboarding."
+                },
+                {
+                  "disabled": false,
+                  "key": "ts",
+                  "value": "<long>",
+                  "description": "(Required) Current client timestamp in milliseconds; must be included in the signed parameter set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "882d1c92-69e0-4729-ad81-b0c3d9be987b",
+              "name": "The list of supported languages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "languages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9482,\n  \"data\": {\n    \"rows\": [\n      {\n        \"name\": \"string\",\n        \"nameUni\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"nameUni\": \"string\",\n        \"code\": \"string\"\n      }\n    ],\n    \"count\": 1699\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07695bef-7923-42a6-99da-1092ddb21e02",
+              "name": "Invalid API key given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "languages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f445a531-fc1b-4445-b8b2-cfc8191db73e",
+              "name": "Invalid signature given in the request header.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "languages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c096f2e6-e21c-4a5b-a371-ade6a5ef083f",
+              "name": "Any unexpected issue at Dailyhunt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "syndication",
+                    "languages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ts",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://feed.dailyhunt.in",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a0a003c1-887d-45d5-9b51-0e0d3ecb8927",
+    "name": "Dailyhunt Content Syndication Languages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt's editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).\nThis OpenAPI was DERIVED by API Evangelist from Dailyhunt's own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.\n\nContact Support:\n Name: Dailyhunt Content Syndication — Partner Integration",
+      "type": "text/plain"
+    }
+  }
+}

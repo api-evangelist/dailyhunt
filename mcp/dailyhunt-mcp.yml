@@ -2,29 +2,31 @@ generated: '2026-08-04'
 method: derived
 status: candidate
 source: openapi/dailyhunt-content-syndication-openapi.yml, openapi/dailyhunt-shopping-catalog-openapi.yml
-description: >-
-  Dailyhunt publishes no hosted or remote MCP server. Searched the developer resource center, the
-  partner integration reference, the github.com/dailyhunt organization and the public MCP registries;
-  nothing found. This is a CANDIDATE tool surface derived from the operations in the OpenAPI
-  definitions, offered as a design starting point — it is not a Dailyhunt product and nothing here is
-  callable today.
+description: Dailyhunt publishes no hosted or remote MCP server. Searched the developer resource center,
+  the partner integration reference, the github.com/dailyhunt organization and the public MCP registries;
+  nothing found. This is a CANDIDATE tool surface derived from the operations in the OpenAPI definitions,
+  offered as a design starting point — it is not a Dailyhunt product and nothing here is callable today.
 server:
   name: dailyhunt
   transport: http
   url: null
   published: false
 search_evidence:
-- {source: 'https://developer.dailyhunt.in/ads/', result: no MCP surface, http_status: 200}
-- {source: 'https://api-syndication.dailyhunt.in/', result: no MCP surface, http_status: 200}
-- {source: 'https://github.com/dailyhunt', result: 'no MCP repo (6 repos, last first-party push 2018)'}
-- {source: 'npm @modelcontextprotocol scope', result: no dailyhunt server}
+- source: https://developer.dailyhunt.in/ads/
+  result: no MCP surface
+  http_status: 200
+- source: https://api-syndication.dailyhunt.in/
+  result: no MCP surface
+  http_status: 200
+- source: https://github.com/dailyhunt
+  result: no MCP repo (6 repos, last first-party push 2018)
+- source: npm @modelcontextprotocol scope
+  result: no dailyhunt server
 constraints:
-  note: >-
-    Any real MCP server over this API would have to hold the partner secret key server-side and sign
-    every outbound request (HMAC-SHA1 over the sorted query string), maintain the per-user dhFeedV1
-    cookie, and honour Dailyhunt's mandatory view-tracking and ComScore attribution obligations on
-    the agent's behalf. A naive proxy that skips the tracking write-back would breach the partner
-    integration contract.
+  note: Any real MCP server over this API would have to hold the partner secret key server-side and sign
+    every outbound request (HMAC-SHA1 over the sorted query string), maintain the per-user dhFeedV1 cookie,
+    and honour Dailyhunt's mandatory view-tracking and ComScore attribution obligations on the agent's
+    behalf. A naive proxy that skips the tracking write-back would breach the partner integration contract.
 tools:
 - name: list_channels
   description: List the Dailyhunt content channels available to the partner for a language.
@@ -74,3 +76,9 @@ tools:
 x-evidence:
   searched: '2026-08-04'
   result: no provider-published MCP server
+deployment:
+  mode: none
+  verified: derived
+  tools: 15
+  checked: '2026-08-12'
+  source: catalog MCP census

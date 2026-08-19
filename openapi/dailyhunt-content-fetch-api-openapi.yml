@@ -1,0 +1,311 @@
+openapi: 3.2.0
+info:
+  title: Dailyhunt Content Syndication Content Fetch API
+  version: '2.3'
+  description: 'The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt''s editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).
+
+    This OpenAPI was DERIVED by API Evangelist from Dailyhunt''s own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.'
+  contact:
+    name: Dailyhunt Content Syndication — Partner Integration
+    url: https://api-syndication.dailyhunt.in/
+  x-apievangelist-derived-from: https://api-syndication.dailyhunt.in/
+  x-apievangelist-derived-source-artifact: postman/dailyhunt-content-syndication.postman_collection.json
+  x-apievangelist-derived-on: '2026-08-04'
+  x-apievangelist-provider-published: false
+servers:
+- url: http://feed.dailyhunt.in
+  description: Production content feed host (partner-gated; does not resolve in public DNS as of 2026-08-04)
+- url: http://qa-news.newshunt.com
+  description: Stage integration environment for partner development and testing
+- url: http://track.dailyhunt.in
+  description: Production tracking host
+security:
+- ApiKeyAuth: []
+  RequestSignature: []
+tags:
+- name: Content Fetch
+  description: Paginated retrieval of the content cards inside a channel, plus keyword search.
+paths:
+  /api/v2/syndication/items:
+    get:
+      operationId: fetchItems
+      summary: Fetch content cards from a channel
+      description: Returns the paginated content cards (stories, videos, photos, DailyShare cards, banners, polls, HTML cards) for the channel identified by `cid`. Callers should prefer the `contentUrl` returned by the Channels API, which already carries the correct `fm` for the channel, and follow `nextPageUrl` for pagination. The response also carries the `trackUrl` and per-card `trackData` that must be POSTed back to the Tracking API.
+      tags:
+      - Content Fetch
+      parameters:
+      - $ref: '#/components/parameters/Partner'
+      - name: cid
+        in: query
+        required: true
+        description: Channel id whose content cards should be returned.
+        schema:
+          type: string
+      - $ref: '#/components/parameters/LangCode'
+      - $ref: '#/components/parameters/Ts'
+      - $ref: '#/components/parameters/Puid'
+      - $ref: '#/components/parameters/Pfm'
+      - name: fm
+        in: query
+        description: Channel-level feature mask. Inherited from the channel `contentUrl`; only override when a specific change is needed for one channel.
+        schema:
+          type: integer
+      - name: fields
+        in: query
+        description: Field selection modifier as published in the reference (for example `none`).
+        schema:
+          type: string
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: A paginated list of content cards.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListResponse'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/InvalidSignature'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /api/v2/syndication/search:
+    get:
+      operationId: searchContent
+      summary: Search content
+      description: Returns content cards matching a user-supplied search query.
+      tags:
+      - Content Fetch
+      parameters:
+      - $ref: '#/components/parameters/Partner'
+      - $ref: '#/components/parameters/LangCode'
+      - $ref: '#/components/parameters/Ts'
+      - $ref: '#/components/parameters/Puid'
+      - name: query
+        in: query
+        required: true
+        description: The user's search query.
+        schema:
+          type: string
+      - $ref: '#/components/parameters/PageSize'
+      - $ref: '#/components/parameters/PageNumber'
+      responses:
+        '200':
+          description: A paginated list of matching content cards.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemListResponse'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/InvalidSignature'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    Thumbnail:
+      type: object
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+    ItemListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP status code value
+        data:
+          type: object
+          properties:
+            rows:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+            pageNumber:
+              type: integer
+              description: Current page number of the paginated data
+            count:
+              type: integer
+              description: Total number of cards in the page
+            nextPageUrl:
+              type: string
+              description: Next page URL; resend all its parameters plus a fresh timestamp
+            trackUrl:
+              type: string
+              description: Tracking POST URL for this page of cards
+            track:
+              type: object
+              description: Attribution block
+              properties:
+                comscoreUrls:
+                  type: array
+                  items:
+                    type: string
+                  description: ComScore pixel URLs to ping once per list view
+    ShareInfo:
+      type: object
+      properties:
+        shareString:
+          type: string
+          description: Complete share string with shortened share URL plus item title and source
+        shareUrl:
+          type: string
+          description: Shortened URL to share the item
+    Item:
+      type: object
+      description: A content card. Content types are STORY, VIDEO, PHOTO, ASTROLOGY, VHMEME, BANNER, QUESTION_MULTI_CHOICES and HTML.
+      properties:
+        id:
+          type: string
+          description: Card ID
+        title:
+          type: string
+          description: Short title of the card
+        description:
+          type: string
+          description: Brief content of the card
+        deepLinkUrl:
+          type: string
+          description: Card deep link URL
+        appDeepLinkUrl:
+          type: string
+          description: Deep link URL to open in the app if installed
+        publishTime:
+          type: integer
+          format: int64
+          description: Card publish time
+        images:
+          type: array
+          description: Array of image URLs, templated as /{CMD}/{W}x{H}_{Q}/ for on-demand crop or resize
+          items:
+            type: string
+        imageCount:
+          type: integer
+          description: Number of images in the article
+        source:
+          type: string
+          description: Original source
+        sourceLogo:
+          type: string
+          description: Publisher logo
+        type:
+          type: string
+          description: Content type
+        contentType:
+          type: string
+          description: Card content type (STORY, VIDEO, VHMEME)
+        trackData:
+          type: string
+          description: Tracking attributes for the card
+          replayed to the Tracking API: null
+        uiType:
+          type: string
+          description: Card layout (NORMAL, HERO, TILE_3, GRID_3, GRID_5, VH_BIG, VH_SMALL, VH_FIT_BACKGROUND, GRID, TAGS, CAROUSEL)
+        label:
+          type: string
+          description: Card label (Top, Breaking, Latest and similar)
+        duration:
+          type: string
+          description: Video card duration when the type is video
+        tags:
+          type: array
+          items:
+            type: string
+          description: Array of hashtags
+        nsfw:
+          type: boolean
+          description: Whether the card is not safe for work
+        thumbnail:
+          $ref: '#/components/schemas/Thumbnail'
+        shareCount:
+          type: string
+          description: Share count of the card
+        authorName:
+          type: string
+          description: Author name of the card
+        recommendationTs:
+          type: integer
+          format: int64
+          description: Recommendation timestamp
+          For You channel only: null
+        shareInfo:
+          $ref: '#/components/schemas/ShareInfo'
+        collectionItems:
+          type: array
+          description: Nested items of the same structure (QUESTION_MULTI_CHOICES cards)
+          items:
+            $ref: '#/components/schemas/Item'
+  parameters:
+    PageNumber:
+      name: pageNumber
+      in: query
+      description: Zero-based page number of the paginated response.
+      schema:
+        type: integer
+    PageSize:
+      name: pageSize
+      in: query
+      description: Number of records per page.
+      schema:
+        type: integer
+    Pfm:
+      name: pfm
+      in: query
+      description: Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved.
+      schema:
+        type: integer
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
+    LangCode:
+      name: langCode
+      in: query
+      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
+      schema:
+        type: string
+    Puid:
+      name: puid
+      in: query
+      required: true
+      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+  responses:
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The partner API key issued by Dailyhunt at onboarding, sent as `key=<API Key>`.
+    RequestSignature:
+      type: apiKey
+      in: header
+      name: Signature
+      description: Base64-encoded HMAC-SHA1 of the signature base string, computed with the partner secret key. The signature base string is the URL-encoded request query parameters sorted lexicographically by encoded key and joined with `&`, followed by the uppercased HTTP method. A `ts` (timestamp) query parameter must be present in the signed parameter set.
+externalDocs:
+  description: Dailyhunt Content Syndication — Partner Integration Reference
+  url: https://api-syndication.dailyhunt.in/

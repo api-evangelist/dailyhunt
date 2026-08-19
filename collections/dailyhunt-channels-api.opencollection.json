@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Dailyhunt Content Syndication Channels API",
+    "version": "2.3"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List content channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/channels",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "langCode",
+                "value": "",
+                "type": "query",
+                "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "pfm",
+                "value": "",
+                "type": "query",
+                "description": "Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              }
+            ]
+          },
+          "docs": "Returns the list of content channels the partner is entitled to consume for a language. A channel has a name and a `contentUrl` used to fetch its cards. Setting `pfm=64` returns the DailyShare (viral) channels instead of the standard news channels."
+        },
+        {
+          "info": {
+            "name": "List location channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/channels/locations",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "langCode",
+                "value": "",
+                "type": "query",
+                "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "pfm",
+                "value": "",
+                "type": "query",
+                "description": "Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              }
+            ]
+          },
+          "docs": "Returns location-scoped channels whose items are specific to a geography. Dailyhunt must enable these channels for the partner and the correct `pfm` value must be sent. Location channels may carry `subChannels`."
+        },
+        {
+          "info": {
+            "name": "List video channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://feed.dailyhunt.in/api/v2/syndication/video/channels",
+            "params": [
+              {
+                "name": "partner",
+                "value": "",
+                "type": "query",
+                "description": "The partner identification code issued by Dailyhunt at onboarding."
+              },
+              {
+                "name": "langCode",
+                "value": "",
+                "type": "query",
+                "description": "Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne."
+              },
+              {
+                "name": "pfm",
+                "value": "",
+                "type": "query",
+                "description": "Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved."
+              },
+              {
+                "name": "ts",
+                "value": "",
+                "type": "query",
+                "description": "Current client timestamp in milliseconds; must be included in the signed parameter set."
+              },
+              {
+                "name": "puid",
+                "value": "",
+                "type": "query",
+                "description": "The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page number of the paginated response."
+              }
+            ]
+          },
+          "docs": "Returns the video-only content channels available to the partner. Requires the video feature bit in the feature mask (`pfm=32`) and per-partner enablement by Dailyhunt."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

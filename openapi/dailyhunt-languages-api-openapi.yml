@@ -1,0 +1,116 @@
+openapi: 3.2.0
+info:
+  title: Dailyhunt Content Syndication Languages API
+  version: '2.3'
+  description: 'The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt''s editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).
+
+    This OpenAPI was DERIVED by API Evangelist from Dailyhunt''s own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.'
+  contact:
+    name: Dailyhunt Content Syndication — Partner Integration
+    url: https://api-syndication.dailyhunt.in/
+  x-apievangelist-derived-from: https://api-syndication.dailyhunt.in/
+  x-apievangelist-derived-source-artifact: postman/dailyhunt-content-syndication.postman_collection.json
+  x-apievangelist-derived-on: '2026-08-04'
+  x-apievangelist-provider-published: false
+servers:
+- url: http://feed.dailyhunt.in
+  description: Production content feed host (partner-gated; does not resolve in public DNS as of 2026-08-04)
+- url: http://qa-news.newshunt.com
+  description: Stage integration environment for partner development and testing
+- url: http://track.dailyhunt.in
+  description: Production tracking host
+security:
+- ApiKeyAuth: []
+  RequestSignature: []
+tags:
+- name: Languages
+  description: The languages Dailyhunt's content feeds support.
+paths:
+  /api/v2/syndication/languages:
+    get:
+      operationId: listLanguages
+      summary: List supported languages
+      description: Returns the languages Dailyhunt's content feeds support, each with an English label, a unicode label and a language code. Fourteen codes are published — en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
+      tags:
+      - Languages
+      parameters:
+      - $ref: '#/components/parameters/Partner'
+      - $ref: '#/components/parameters/Ts'
+      responses:
+        '200':
+          description: The list of supported languages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LanguageListResponse'
+        '401':
+          $ref: '#/components/responses/InvalidApiKey'
+        '403':
+          $ref: '#/components/responses/InvalidSignature'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    LanguageListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: object
+          properties:
+            rows:
+              type: array
+              items:
+                $ref: '#/components/schemas/Language'
+            count:
+              type: integer
+    Language:
+      type: object
+      properties:
+        name:
+          type: string
+          description: English label for the language
+        nameUni:
+          type: string
+          description: Unicode label name
+        code:
+          type: string
+          description: Language code
+  responses:
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+  parameters:
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The partner API key issued by Dailyhunt at onboarding, sent as `key=<API Key>`.
+    RequestSignature:
+      type: apiKey
+      in: header
+      name: Signature
+      description: Base64-encoded HMAC-SHA1 of the signature base string, computed with the partner secret key. The signature base string is the URL-encoded request query parameters sorted lexicographically by encoded key and joined with `&`, followed by the uppercased HTTP method. A `ts` (timestamp) query parameter must be present in the signed parameter set.
+externalDocs:
+  description: Dailyhunt Content Syndication — Partner Integration Reference
+  url: https://api-syndication.dailyhunt.in/

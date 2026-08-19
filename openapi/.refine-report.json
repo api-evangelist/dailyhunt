@@ -1,0 +1,38 @@
+{
+  "provider": "dailyhunt",
+  "sources": [
+    "dailyhunt-catalog-api-openapi.yml",
+    "dailyhunt-channels-api-openapi.yml",
+    "dailyhunt-content-fetch-api-openapi.yml",
+    "dailyhunt-cricket-api-openapi.yml",
+    "dailyhunt-feedback-api-openapi.yml",
+    "dailyhunt-languages-api-openapi.yml",
+    "dailyhunt-products-api-openapi.yml",
+    "dailyhunt-tracking-api-openapi.yml"
+  ],
+  "outputs": [
+    "dailyhunt-catalog-api-openapi.yml",
+    "dailyhunt-channels-api-openapi.yml",
+    "dailyhunt-content-fetch-api-openapi.yml",
+    "dailyhunt-cricket-api-openapi.yml",
+    "dailyhunt-feedback-api-openapi.yml",
+    "dailyhunt-languages-api-openapi.yml",
+    "dailyhunt-products-api-openapi.yml",
+    "dailyhunt-tracking-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "dailyhunt-catalog-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-channels-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-content-fetch-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-cricket-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-feedback-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-languages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "dailyhunt-tracking-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

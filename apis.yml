@@ -136,6 +136,8 @@ apis:
   humanURL: https://api-syndication.dailyhunt.in/
   baseURL: http://feed.dailyhunt.in/api/v2/syndication
   tags:
+  - Language
+  tags_raw:
   - Languages
   properties:
   - type: OpenAPI
@@ -156,6 +158,8 @@ apis:
   humanURL: https://api-syndication.dailyhunt.in/
   baseURL: http://feed.dailyhunt.in/api/v2/syndication
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI

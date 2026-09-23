@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   title: Dailyhunt Content Syndication Cricket API
   version: '2.3'
-  description: 'The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt''s editorial catalogue into its own app, browser, device home screen or PWA. It exposes channel discovery (news, location, video and DailyShare/viral channels), paginated content fetch for the cards in a channel, keyword search across the catalogue, a supported-language list, a card feedback surface, a live cricket score and commentary stream, and a view-tracking endpoint that a partner must call back with the `trackData` of every card its user saw. Content is available in fourteen Indian languages. Every call is signed: the partner sends its API key in the `Authorization` header as `key=<API Key>` and a Base64-encoded HMAC-SHA1 `Signature` header computed over the lexicographically-sorted, URL-encoded query string plus the uppercased HTTP method, using the secret key Dailyhunt issues at onboarding. A per-user `puid` (partner unique user id) is required on every call and Dailyhunt returns a `dhFeedV1` cookie the partner must persist and replay. Access is partner-gated — API key, secret key and partner code are provisioned over email during onboarding, and the advanced surfaces (video channels, DailyShare cards, location channels, cricket) are additionally gated behind a per-partner feature mask (`pfm`).
-
-    This OpenAPI was DERIVED by API Evangelist from Dailyhunt''s own public Partner Integration Reference (the Postman-published documentation at https://api-syndication.dailyhunt.in/, version 2.2/2.3) — every path, HTTP method, query parameter, header, response code, response field and example was transcribed from that published document and from the collection JSON it serves. It is NOT a provider-published specification. Dailyhunt publishes no machine-readable OpenAPI: probes of /openapi.json, /swagger.json and /api-docs on api-syndication.dailyhunt.in and developer.dailyhunt.in all returned HTTP 404 on 2026-08-04, and feed.dailyhunt.in does not resolve in public DNS (no A record) — the production host is reachable only to onboarded partners.'
+  description: The Dailyhunt Content Syndication API lets an approved partner pull Dailyhunt's editorial catalogue into its own app, browser, device home screen or PWA.
   contact:
     name: Dailyhunt Content Syndication — Partner Integration
     url: https://api-syndication.dailyhunt.in/
@@ -85,13 +83,10 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
   parameters:
-    PageNumber:
-      name: pageNumber
-      in: query
-      description: Zero-based page number of the paginated response.
-      schema:
-        type: integer
     Ts:
       name: ts
       in: query
@@ -107,6 +102,12 @@ components:
       description: The partner identification code issued by Dailyhunt at onboarding.
       schema:
         type: string
+    PageNumber:
+      name: pageNumber
+      in: query
+      description: Zero-based page number of the paginated response.
+      schema:
+        type: integer
     Puid:
       name: puid
       in: query
@@ -155,9 +156,6 @@ components:
               type: integer
             nextPageUrl:
               type: string
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

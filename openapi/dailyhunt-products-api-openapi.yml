@@ -111,19 +111,40 @@ paths:
                     format: int64
 components:
   schemas:
-    Shipping:
+    ProductBatchRequest:
       type: object
+      required:
+      - access_token
+      - requests
       properties:
-        country:
+        access_token:
           type: string
-        region:
+        item_type:
           type: string
-        service:
-          type: string
-        price_value:
-          type: string
-        price_currency:
-          type: string
+          description: For example PRODUCT_ITEM
+        allow_upsert:
+          type: boolean
+        requests:
+          type: array
+          items:
+            type: object
+            required:
+            - method
+            - retailer_id
+            properties:
+              method:
+                type: string
+                enum:
+                - CREATE
+                - UPDATE
+                - DELETE
+              retailer_id:
+                type:
+                - string
+                - integer
+                description: The vendor's own product identifier
+              data:
+                $ref: '#/components/schemas/ProductData'
     ProductData:
       type: object
       description: Product attributes for a CREATE or UPDATE request row.
@@ -191,6 +212,19 @@ components:
           type: string
         custom_label_4:
           type: string
+    Shipping:
+      type: object
+      properties:
+        country:
+          type: string
+        region:
+          type: string
+        service:
+          type: string
+        price_value:
+          type: string
+        price_currency:
+          type: string
     AppLinks:
       type: object
       properties:
@@ -218,40 +252,6 @@ components:
                 type: integer
               app_name:
                 type: string
-    ProductBatchRequest:
-      type: object
-      required:
-      - access_token
-      - requests
-      properties:
-        access_token:
-          type: string
-        item_type:
-          type: string
-          description: For example PRODUCT_ITEM
-        allow_upsert:
-          type: boolean
-        requests:
-          type: array
-          items:
-            type: object
-            required:
-            - method
-            - retailer_id
-            properties:
-              method:
-                type: string
-                enum:
-                - CREATE
-                - UPDATE
-                - DELETE
-              retailer_id:
-                type:
-                - string
-                - integer
-                description: The vendor's own product identifier
-              data:
-                $ref: '#/components/schemas/ProductData'
   securitySchemes:
     VendorAccessToken:
       type: apiKey

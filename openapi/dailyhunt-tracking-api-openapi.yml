@@ -49,10 +49,21 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
   parameters:
+    Puid:
+      name: puid
+      in: query
+      required: true
+      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
     Ts:
       name: ts
       in: query
@@ -61,20 +72,9 @@ components:
       schema:
         type: integer
         format: int64
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
-    Puid:
-      name: puid
-      in: query
-      required: true
-      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
-      schema:
-        type: string
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
   schemas:
     TrackingRequest:
       type: object

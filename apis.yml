@@ -44,6 +44,9 @@ specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 image: https://m.dailyhunt.in/favicon.ico
+x-docs-platform: docusaurus
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-25
 tags:
 - Company
 - News

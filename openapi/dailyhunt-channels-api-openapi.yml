@@ -110,18 +110,21 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   parameters:
-    PageNumber:
-      name: pageNumber
+    Ts:
+      name: ts
       in: query
-      description: Zero-based page number of the paginated response.
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
       schema:
         type: integer
-    PageSize:
-      name: pageSize
+        format: int64
+    Partner:
+      name: partner
       in: query
-      description: Number of records per page.
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
       schema:
-        type: integer
+        type: string
     Puid:
       name: puid
       in: query
@@ -135,35 +138,52 @@ components:
       description: Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved.
       schema:
         type: integer
-    Partner:
-      name: partner
+    PageNumber:
+      name: pageNumber
       in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
+      description: Zero-based page number of the paginated response.
       schema:
-        type: string
+        type: integer
     LangCode:
       name: langCode
       in: query
       description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
       schema:
         type: string
-    Ts:
-      name: ts
+    PageSize:
+      name: pageSize
       in: query
-      required: true
-      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      description: Number of records per page.
       schema:
         type: integer
-        format: int64
-  responses:
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
   schemas:
+    Channel:
+      type: object
+      description: A topic under which content items are classified.
+      properties:
+        id:
+          type: string
+          description: Channel ID
+        name:
+          type: string
+          description: Channel name
+        type:
+          type: string
+          description: Channel type, for example FORYOU, DHTV or CRICKET
+        contentUrl:
+          type: string
+          description: Channel content fetch URL used to get items from this channel
+        deepLinkUrl:
+          type: string
+          description: Deep link that opens the content feed page on the PWA or mobile web site
+        appDeepLinkUrl:
+          type: string
+          description: Deep link that opens the feed in the Dailyhunt app if installed
+        subChannels:
+          type: array
+          description: Nested channels (location channels only)
+          items:
+            $ref: '#/components/schemas/Channel'
     ChannelListResponse:
       type: object
       properties:
@@ -192,33 +212,13 @@ components:
             appHomeUrl:
               type: string
               description: URL of the Dailyhunt app home page if installed
-    Channel:
-      type: object
-      description: A topic under which content items are classified.
-      properties:
-        id:
-          type: string
-          description: Channel ID
-        name:
-          type: string
-          description: Channel name
-        type:
-          type: string
-          description: Channel type, for example FORYOU, DHTV or CRICKET
-        contentUrl:
-          type: string
-          description: Channel content fetch URL used to get items from this channel
-        deepLinkUrl:
-          type: string
-          description: Deep link that opens the content feed page on the PWA or mobile web site
-        appDeepLinkUrl:
-          type: string
-          description: Deep link that opens the feed in the Dailyhunt app if installed
-        subChannels:
-          type: array
-          description: Nested channels (location channels only)
-          items:
-            $ref: '#/components/schemas/Channel'
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

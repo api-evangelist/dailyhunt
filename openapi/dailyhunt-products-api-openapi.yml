@@ -111,6 +111,33 @@ paths:
                     format: int64
 components:
   schemas:
+    AppLinks:
+      type: object
+      properties:
+        android:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              app_name:
+                type: string
+              package:
+                type: string
+              class:
+                type: string
+        iphone:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              app_store_id:
+                type: integer
+              app_name:
+                type: string
     ProductBatchRequest:
       type: object
       required:
@@ -225,33 +252,6 @@ components:
           type: string
         price_currency:
           type: string
-    AppLinks:
-      type: object
-      properties:
-        android:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              app_name:
-                type: string
-              package:
-                type: string
-              class:
-                type: string
-        iphone:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              app_store_id:
-                type: integer
-              app_name:
-                type: string
   securitySchemes:
     VendorAccessToken:
       type: apiKey

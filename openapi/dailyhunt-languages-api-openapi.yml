@@ -48,13 +48,22 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
+  parameters:
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
   schemas:
     Language:
       type: object
@@ -82,22 +91,13 @@ components:
                 $ref: '#/components/schemas/Language'
             count:
               type: integer
-  parameters:
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
-    Ts:
-      name: ts
-      in: query
-      required: true
-      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
-      schema:
-        type: integer
-        format: int64
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

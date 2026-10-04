@@ -83,35 +83,6 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  parameters:
-    Ts:
-      name: ts
-      in: query
-      required: true
-      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
-      schema:
-        type: integer
-        format: int64
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
-    Puid:
-      name: puid
-      in: query
-      required: true
-      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
-      schema:
-        type: string
-    PageNumber:
-      name: pageNumber
-      in: query
-      description: Zero-based page number of the paginated response.
-      schema:
-        type: integer
   schemas:
     CommentaryLine:
       type: object
@@ -156,6 +127,35 @@ components:
   responses:
     ServerError:
       description: Any unexpected issue at Dailyhunt.
+  parameters:
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    Puid:
+      name: puid
+      in: query
+      required: true
+      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
+    PageNumber:
+      name: pageNumber
+      in: query
+      description: Zero-based page number of the paginated response.
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

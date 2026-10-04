@@ -48,6 +48,13 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
   parameters:
     Ts:
       name: ts
@@ -91,13 +98,6 @@ components:
                 $ref: '#/components/schemas/Language'
             count:
               type: integer
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -111,33 +111,19 @@ paths:
                     format: int64
 components:
   schemas:
-    AppLinks:
+    Shipping:
       type: object
       properties:
-        android:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              app_name:
-                type: string
-              package:
-                type: string
-              class:
-                type: string
-        iphone:
-          type: array
-          items:
-            type: object
-            properties:
-              url:
-                type: string
-              app_store_id:
-                type: integer
-              app_name:
-                type: string
+        country:
+          type: string
+        region:
+          type: string
+        service:
+          type: string
+        price_value:
+          type: string
+        price_currency:
+          type: string
     ProductBatchRequest:
       type: object
       required:
@@ -172,6 +158,33 @@ components:
                 description: The vendor's own product identifier
               data:
                 $ref: '#/components/schemas/ProductData'
+    AppLinks:
+      type: object
+      properties:
+        android:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              app_name:
+                type: string
+              package:
+                type: string
+              class:
+                type: string
+        iphone:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+              app_store_id:
+                type: integer
+              app_name:
+                type: string
     ProductData:
       type: object
       description: Product attributes for a CREATE or UPDATE request row.
@@ -238,19 +251,6 @@ components:
         custom_label_3:
           type: string
         custom_label_4:
-          type: string
-    Shipping:
-      type: object
-      properties:
-        country:
-          type: string
-        region:
-          type: string
-        service:
-          type: string
-        price_value:
-          type: string
-        price_currency:
           type: string
   securitySchemes:
     VendorAccessToken:

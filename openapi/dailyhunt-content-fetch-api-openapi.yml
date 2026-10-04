@@ -102,7 +102,20 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
+    InvalidSignature:
+      description: Invalid signature given in the request header.
   parameters:
+    LangCode:
+      name: langCode
+      in: query
+      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
+      schema:
+        type: string
     Ts:
       name: ts
       in: query
@@ -111,18 +124,18 @@ components:
       schema:
         type: integer
         format: int64
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
     Puid:
       name: puid
       in: query
       required: true
       description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
       schema:
         type: string
     Pfm:
@@ -131,31 +144,18 @@ components:
       description: Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved.
       schema:
         type: integer
-    PageNumber:
-      name: pageNumber
-      in: query
-      description: Zero-based page number of the paginated response.
-      schema:
-        type: integer
-    LangCode:
-      name: langCode
-      in: query
-      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
-      schema:
-        type: string
     PageSize:
       name: pageSize
       in: query
       description: Number of records per page.
       schema:
         type: integer
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
+    PageNumber:
+      name: pageNumber
+      in: query
+      description: Zero-based page number of the paginated response.
+      schema:
+        type: integer
   schemas:
     ItemListResponse:
       type: object
@@ -191,6 +191,24 @@ components:
                   items:
                     type: string
                   description: ComScore pixel URLs to ping once per list view
+    ShareInfo:
+      type: object
+      properties:
+        shareString:
+          type: string
+          description: Complete share string with shortened share URL plus item title and source
+        shareUrl:
+          type: string
+          description: Shortened URL to share the item
+    Thumbnail:
+      type: object
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
     Item:
       type: object
       description: A content card. Content types are STORY, VIDEO, PHOTO, ASTROLOGY, VHMEME, BANNER, QUESTION_MULTI_CHOICES and HTML.
@@ -275,24 +293,6 @@ components:
           description: Nested items of the same structure (QUESTION_MULTI_CHOICES cards)
           items:
             $ref: '#/components/schemas/Item'
-    ShareInfo:
-      type: object
-      properties:
-        shareString:
-          type: string
-          description: Complete share string with shortened share URL plus item title and source
-        shareUrl:
-          type: string
-          description: Shortened URL to share the item
-    Thumbnail:
-      type: object
-      properties:
-        url:
-          type: string
-        width:
-          type: integer
-        height:
-          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

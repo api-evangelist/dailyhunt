@@ -109,60 +109,6 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-  parameters:
-    LangCode:
-      name: langCode
-      in: query
-      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
-      schema:
-        type: string
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
-    Puid:
-      name: puid
-      in: query
-      required: true
-      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
-      schema:
-        type: string
-    Pfm:
-      name: pfm
-      in: query
-      description: Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved.
-      schema:
-        type: integer
-    Ts:
-      name: ts
-      in: query
-      required: true
-      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
-      schema:
-        type: integer
-        format: int64
-    PageSize:
-      name: pageSize
-      in: query
-      description: Number of records per page.
-      schema:
-        type: integer
-    PageNumber:
-      name: pageNumber
-      in: query
-      description: Zero-based page number of the paginated response.
-      schema:
-        type: integer
   schemas:
     Channel:
       type: object
@@ -219,6 +165,60 @@ components:
             appHomeUrl:
               type: string
               description: URL of the Dailyhunt app home page if installed
+  parameters:
+    LangCode:
+      name: langCode
+      in: query
+      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
+      schema:
+        type: string
+    Puid:
+      name: puid
+      in: query
+      required: true
+      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    PageNumber:
+      name: pageNumber
+      in: query
+      description: Zero-based page number of the paginated response.
+      schema:
+        type: integer
+    PageSize:
+      name: pageSize
+      in: query
+      description: Number of records per page.
+      schema:
+        type: integer
+    Pfm:
+      name: pfm
+      in: query
+      description: Partner feature mask — the sum of the feature bits enabled for the partner or channel. LIVE_TV_CARD 1, CRICKET_CARD (brief) 8, HERO_CARD 16, VIDEO_CHANNELS 32, VIRAL_CHANNELS 64, CRICKET_CARD (detailed) 128. Bits 2 and 4 are reserved.
+      schema:
+        type: integer
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
+  responses:
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

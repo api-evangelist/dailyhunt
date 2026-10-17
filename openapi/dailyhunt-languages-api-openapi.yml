@@ -48,13 +48,33 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
-  responses:
-    ServerError:
-      description: Any unexpected issue at Dailyhunt.
-    InvalidApiKey:
-      description: Invalid API key given in the request header.
-    InvalidSignature:
-      description: Invalid signature given in the request header.
+  schemas:
+    LanguageListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        data:
+          type: object
+          properties:
+            rows:
+              type: array
+              items:
+                $ref: '#/components/schemas/Language'
+            count:
+              type: integer
+    Language:
+      type: object
+      properties:
+        name:
+          type: string
+          description: English label for the language
+        nameUni:
+          type: string
+          description: Unicode label name
+        code:
+          type: string
+          description: Language code
   parameters:
     Ts:
       name: ts
@@ -71,33 +91,13 @@ components:
       description: The partner identification code issued by Dailyhunt at onboarding.
       schema:
         type: string
-  schemas:
-    Language:
-      type: object
-      properties:
-        name:
-          type: string
-          description: English label for the language
-        nameUni:
-          type: string
-          description: Unicode label name
-        code:
-          type: string
-          description: Language code
-    LanguageListResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-        data:
-          type: object
-          properties:
-            rows:
-              type: array
-              items:
-                $ref: '#/components/schemas/Language'
-            count:
-              type: integer
+  responses:
+    InvalidSignature:
+      description: Invalid signature given in the request header.
+    ServerError:
+      description: Any unexpected issue at Dailyhunt.
+    InvalidApiKey:
+      description: Invalid API key given in the request header.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

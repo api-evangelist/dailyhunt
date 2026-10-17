@@ -76,6 +76,35 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 components:
+  parameters:
+    LangCode:
+      name: langCode
+      in: query
+      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
+      schema:
+        type: string
+    Puid:
+      name: puid
+      in: query
+      required: true
+      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
+      schema:
+        type: string
+    Ts:
+      name: ts
+      in: query
+      required: true
+      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
+      schema:
+        type: integer
+        format: int64
+    Partner:
+      name: partner
+      in: query
+      required: true
+      description: The partner identification code issued by Dailyhunt at onboarding.
+      schema:
+        type: string
   schemas:
     FeedbackOptionsResponse:
       type: object
@@ -91,6 +120,18 @@ components:
                 $ref: '#/components/schemas/FeedbackOption'
             count:
               type: integer
+    FeedbackOption:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Option ID
+        title:
+          type: string
+          description: Option unicode title
+        value:
+          type: string
+          description: Option value
     FeedbackSubmission:
       type: object
       properties:
@@ -108,54 +149,13 @@ components:
               value:
                 type: string
                 description: Option value
-    FeedbackOption:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Option ID
-        title:
-          type: string
-          description: Option unicode title
-        value:
-          type: string
-          description: Option value
   responses:
+    InvalidSignature:
+      description: Invalid signature given in the request header.
     ServerError:
       description: Any unexpected issue at Dailyhunt.
     InvalidApiKey:
       description: Invalid API key given in the request header.
-    InvalidSignature:
-      description: Invalid signature given in the request header.
-  parameters:
-    LangCode:
-      name: langCode
-      in: query
-      description: Content language code — one of en, hi, mr, gu, pa, bn, kn, ta, te, ml, or, ur, bh, ne.
-      schema:
-        type: string
-    Ts:
-      name: ts
-      in: query
-      required: true
-      description: Current client timestamp in milliseconds; must be included in the signed parameter set.
-      schema:
-        type: integer
-        format: int64
-    Puid:
-      name: puid
-      in: query
-      required: true
-      description: The partner's unique id for the end user accessing the API (for example a device identifier). Dailyhunt maps it to an internal user id to personalize the feed.
-      schema:
-        type: string
-    Partner:
-      name: partner
-      in: query
-      required: true
-      description: The partner identification code issued by Dailyhunt at onboarding.
-      schema:
-        type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

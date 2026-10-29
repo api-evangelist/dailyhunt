@@ -64,16 +64,133 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Dailyhunt is India's largest local-language content and news aggregation platform, operated by VerSe Innovation (Bengaluru). It aggregates news, video and short-form "DailyShare" cards from more than 600 publisher partners across fourteen Indian languages, and syndicates that catalogue to approved partners through a signed HTTP API. Alongside syndication it runs an advertising stack: the Dailyhunt Direct self-serve ad platform, a JavaScript Tracker SDK for down-funnel conversion tracking, and an E-Commerce Shopping Catalog API for vendor product feeds.
+Dailyhunt is India's largest local-language content and news aggregation platform, operated by VerSe Innovation (Bengaluru). It aggregates news, video, and short-form "DailyShare" cards from more than 600 publisher partners across fourteen Indian languages and distributes them through its own apps, mobile web and PWA, and — for approved partners — through a signed Content Syndication API that pushes the same catalogue into partner apps, OEM device home screens and browsers. Alongside syndication, Dailyhunt runs an advertising stack: the Dailyhunt Direct self-serve ad platform, a JavaScript Tracker SDK (with a Google Tag Manager path) for down-funnel conversion tracking on advertiser sites, and an E-Commerce Shopping Catalog API for vendors to batch-upload product feeds. VerSe Innovation also operates the Josh short-video app. API access is partner-gated: keys, secrets and partner codes are provisioned during onboarding rather than self-service, and the production feed host is not publicly resolvable.
 
-Two public API surfaces are profiled here:
+**Areas:** Company · News · Media · Content Syndication · Content · Advertising · Video · Localization · India · Mobile
 
-- **Content Syndication API** — `feed.dailyhunt.in/api/v2/syndication` — channel discovery, content fetch, search, languages, feedback, live cricket, and a mandatory view-tracking callback. Documented at https://api-syndication.dailyhunt.in/.
-- **E-Commerce Shopping Catalog API** — `money.dailyhunt.in/shopping-catalog/v1` — vendor catalog creation and asynchronous product batch ingestion. Documented at https://developer.dailyhunt.in/ads/docs/shopping-catalog/.
+## Dailyhunt on APIs.io
 
-Access to both is partner-gated: keys are provisioned over email at onboarding, and the production feed host does not resolve in public DNS. Dailyhunt publishes no OpenAPI — the specifications in `openapi/` were **derived by API Evangelist from Dailyhunt's own published documentation** and are labelled `x-apievangelist-provider-published: false`. Dailyhunt's own Postman collection is harvested verbatim in `postman/`.
+Everything profiled for Dailyhunt is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dailyhunt/](https://apis.io/providers/dailyhunt/)** — or go straight to one of the APIs or properties below.
 
-- https://www.dailyhunt.in/
-- https://developer.dailyhunt.in/ads/
-- https://api-syndication.dailyhunt.in/
-- https://github.com/dailyhunt
+### APIs (8)
+
+- [Dailyhunt Catalog API](https://apis.io/apis/dailyhunt/dailyhunt-catalog-api/) — Create and read a vendor catalog.
+- [Dailyhunt Channels API](https://apis.io/apis/dailyhunt/dailyhunt-channels-api/) — Discovery of the content channels a partner is entitled to consume.
+- [Dailyhunt Content Fetch API](https://apis.io/apis/dailyhunt/dailyhunt-content-fetch-api/) — Paginated retrieval of the content cards inside a channel, plus keyword search.
+- [Dailyhunt Cricket API](https://apis.io/apis/dailyhunt/dailyhunt-cricket-api/) — Live cricket match score and commentary streaming.
+- [Dailyhunt Feedback API](https://apis.io/apis/dailyhunt/dailyhunt-feedback-api/) — Fetch the feedback options to display to a user and submit the user's selection.
+- [Dailyhunt Languages API](https://apis.io/apis/dailyhunt/dailyhunt-languages-api/) — The languages Dailyhunt's content feeds support.
+- [Dailyhunt Products API](https://apis.io/apis/dailyhunt/dailyhunt-products-api/) — Batch create, update and delete products inside a catalog, and poll batch status.
+- [Dailyhunt Tracking API](https://apis.io/apis/dailyhunt/dailyhunt-tracking-api/) — Partner callback reporting which cards a user actually saw.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [dailyhunt](https://apis.io/servers/dailyhunt/dailyhunt/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Dailyhunt Agentic Access](https://apis.io/agentic-access/dailyhunt/dailyhunt-agentic-access/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [Dailyhunt E-Commerce Shopping Catalog API](https://apis.io/collections/dailyhunt/open-dailyhunt-catalog-api/)
+- [Dailyhunt Content Syndication Channels API](https://apis.io/collections/dailyhunt/open-dailyhunt-channels-api/)
+- [Dailyhunt Content Syndication Content Fetch API](https://apis.io/collections/dailyhunt/open-dailyhunt-content-fetch-api/)
+- [Dailyhunt Content Syndication Cricket API](https://apis.io/collections/dailyhunt/open-dailyhunt-cricket-api/)
+- [Dailyhunt Content Syndication Feedback API](https://apis.io/collections/dailyhunt/open-dailyhunt-feedback-api/)
+- [Dailyhunt Content Syndication Languages API](https://apis.io/collections/dailyhunt/open-dailyhunt-languages-api/)
+- [Dailyhunt E-Commerce Shopping Catalog Products API](https://apis.io/collections/dailyhunt/open-dailyhunt-products-api/)
+- [Dailyhunt Content Syndication Tracking API](https://apis.io/collections/dailyhunt/open-dailyhunt-tracking-api/)
+- [Dailyhunt Content Syndication](https://apis.io/collections/dailyhunt/postman-dailyhunt-content-syndication/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Dailyhunt Content Syndication Overlay](https://apis.io/overlays/dailyhunt/dailyhunt-content-syndication-overlay/)
+- [Dailyhunt Shopping Catalog Overlay](https://apis.io/overlays/dailyhunt/dailyhunt-shopping-catalog-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dailyhunt Authentication](https://apis.io/security/dailyhunt/dailyhunt-authentication/)
+- [Dailyhunt Domain Security](https://apis.io/security/dailyhunt/dailyhunt-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.dailyhunt.in/)
+- [Documentation](https://developer.dailyhunt.in/ads/)
+- [Getting started](https://api-syndication.dailyhunt.in/)
+- [API reference](https://api-syndication.dailyhunt.in/)
+- [Sign up](https://direct.dailyhunt.in/login)
+- [Support](https://verse.in/contact-us.php)
+- [Blog](http://developer.dailyhunt.in/ads/blog/)
+- [Terms of service](https://direct.dailyhunt.in/help/v2/ad-terms-and-conditions)
+- [Privacy policy](https://m.dailyhunt.in/privacy)
+- [GitHub](https://github.com/dailyhunt)
+
+## API Evangelist rating
+
+**Kin Score 34.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 13.9 |
+| Contract governance | 4.5 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 70.8 |
+| Access clarity | 34.2 |
+
+**Agent readiness 23.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dailyhunt/](https://apis.io/providers/dailyhunt/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Dailyhunt: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dailyhunt/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
